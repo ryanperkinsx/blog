@@ -1,0 +1,193 @@
+html,
+body {
+    background: #000000;
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    overflow-y: scroll;
+}
+
+body::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+}
+
+.bear {
+    display: grid;
+    grid-template-columns: 1fr 64px 420px 64px 1fr;
+    grid-template-rows: 128px 32px 256px 224px 140px 140px;
+    gap: 0 0;
+    grid-template-areas:
+    "lb tb tb tb rb"
+    "lb evil antenna evil-eye rb"
+    "lb left_eye head right_eye rb"
+    "lb left_arm body right_arm rb"
+    "lb . left-leg . rb"
+    "lb . right-leg . rb";
+    position: relative;
+}
+
+.top-buffer {
+    grid-area: tb;
+}
+
+.left-buffer {
+    grid-area: lb;
+}
+
+.right-buffer {
+    grid-area: rb;
+}
+
+.evil-eye {
+    display: none;
+    grid-area: evil-eye;
+    left: -260%;
+    position: absolute;
+    top: 434%;
+    z-index: 52;
+}
+
+.evil-eye:hover .evil-eye-img {
+    transform: scale(1.8);
+    cursor: pointer;
+}
+
+.evil-eye-img {
+    display: none;
+}
+
+.antenna {
+    grid-area: antenna;
+    left: 23%;
+    position: absolute;
+    top: 36%;
+    z-index: 52;
+}
+
+.antenna:hover .antenna-img {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.antenna-img {
+    display: block;
+}
+
+.head {
+    grid-area: head;
+    position: absolute;
+    z-index: 30;
+}
+
+.head-img {
+    display: block;
+}
+
+.left-eye {
+    grid-area: left_eye;
+    left: 200%;
+    position: absolute;
+    top: 23%;
+    z-index: 42;
+}
+
+.left-eye:hover .left-eye-img {
+    transform: scale(1.15);
+    cursor: pointer;
+}
+
+.left-eye-img {
+    display: block;
+}
+
+.right-eye {
+    grid-area: right_eye;
+    left: -280%;
+    position: absolute;
+    top: 24%;
+    z-index: 44;
+}
+
+.right-eye:hover .right-eye-img {
+    transform: scale(1.15);
+    cursor: pointer;
+}
+
+.right-eye-img {
+    display: block;
+}
+
+.left-arm {
+    grid-area: left-arm;
+    left: 37.9%;
+    position: absolute;
+    top: 47.2%;
+}
+
+.left-arm:hover .left-arm-img {
+    transform: scale(1.15);
+    cursor: pointer;
+}
+
+.left-arm-img {
+    display: block;
+}
+
+.right-arm {
+    grid-area: right-arm;
+    left: 53.2%;
+    position: absolute;
+    top: 47.4%;
+}
+
+.right-arm:hover .right-arm-img {
+    transform: scale(1.15);
+    cursor: pointer;
+}
+
+.right-arm-img {
+    display: block;
+}
+
+.body {
+    grid-area: body;
+    left: 26%;
+    position: absolute;
+    top: -14%;
+    z-index: 10;
+}
+
+.body-img {
+    display: block;
+}
+
+.left-leg {
+    grid-area: left-leg;
+    left: 20%;
+    position: absolute;
+    top: -70%;
+}
+
+.left-leg:hover .left-leg-img {
+    transform: scale(1.15);
+    cursor: pointer;
+}
+
+.left-leg-img {
+    display: block;
+}
+
+.right-leg {
+    grid-area: right-leg;
+    left: 55%;
+    position: absolute;
+    top: -164%;
+}
+
+.right-leg:hover .right-leg-img {
+    transform: scale(1.15);
+    cursor: pointer;
+}
+
+.right-leg-img {
+    display: block;
+}

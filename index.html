@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ryanperkinsx</title>
+
+    <!--  shortcut icon imports  -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/media/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/media/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/media/favicon/favicon-16x16.png">
+    <!--  crossorigin for CORS   -->
+    <link rel="manifest" href="/media/favicon/site.webmanifest" crossorigin="use-credentials">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <!--  css  -->
+    <link rel="stylesheet" href="index.css">
+
+    <!--  script  -->
+    <script>
+        let evil = false;
+
+        function evilClickHandler() {
+            if (evil) {
+                document.getElementById("antenna-img").src = "media/bear/antenna.png";
+                document.getElementById("evil-eye-img").style.display = "none";
+                document.getElementById("evil-eye").style.display = "none";
+                document.getElementById("antenna").style.left = "23%";
+                document.getElementById("antenna").style.top = "36%";
+                document.getElementById("antenna").style.transform = "scale(1)";
+                evil = false;
+            } else {
+                document.getElementById("antenna-img").src = "media/bear/evil_antenna.png";
+                document.getElementById("evil-eye-img").style.display = "block";
+                document.getElementById("evil-eye").style.display = "block";
+                document.getElementById("antenna").style.left = "15.3%";
+                document.getElementById("antenna").style.top = "-79%";
+                document.getElementById("antenna").style.transform = "scale(0.52)";
+                evil = true;
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="bear">
+        <div class="top-buffer"></div>
+        <div class="left-buffer"></div>
+        <div class="right-buffer"></div>
+
+        <div id="antenna" class="antenna">
+            <img id="antenna-img" class="antenna-img" src="media/bear/antenna.png" onclick="evilClickHandler()" alt="antenna">
+        </div>
+
+        <div id="evil-eye" class="evil-eye">
+            <img id="evil-eye-img" class="evil-eye-img" src="media/bear/evil_eye.png" onclick=alert("🔧") alt="evil eye">
+        </div>
+
+        <div class="head">
+            <img class="head-img" src="media/bear/head.png" alt="head">
+        </div>
+
+        <div class="left-eye">
+            <img class="left-eye-img" src="media/bear/left_eye.png" onclick=alert("🔧") alt="left eye">
+        </div>
+
+        <div class="right-eye">
+            <img class="right-eye-img" src="media/bear/right_eye.png" onclick=alert("🔧") alt="right eye">
+        </div>
+
+        <div class="left-arm">
+            <img class="left-arm-img" src="media/bear/left_arm.png" onclick=alert("🔧") alt="left arm">
+        </div>
+
+        <div class="right-arm">
+            <img class="right-arm-img" src="media/bear/right_arm.png" onclick=alert("🔧") alt="right arm">
+        </div>
+
+        <div class="body">
+            <img class="body-img" src="media/bear/body.png" alt="body">
+        </div>
+
+        <div class="left-leg">
+            <img class="left-leg-img" src="media/bear/left_leg.png" onclick=alert("🔧") alt="left leg">
+        </div>
+
+        <div class="right-leg">
+            <img class="right-leg-img" src="media/bear/right_leg.png" onclick=alert("🔧") alt="right leg">
+        </div>
+    </div>
+</body>
+</html>
