@@ -1,23 +1,26 @@
 ## ryanperkinsx.github.io
 
-:D 
+---
+
+### update log 
+```
+UPDATE 1.0.1 :
+Sunday, 6/5/2022 
+    + added Zoni graphics
+    + added resume.html (referenced David's for mobile formatting)
+    + added resume.css
+    + added Zoni home button
+    - removed bear graphics
+```
+```
+RELEASE 1.0.0 :
+Wednesday, 5/11/2022
+    + initial commit
+```
 
 ---
 
-### update log
-```
-
-```
-
-### todo
-```
-- TODO: make the only part of the evil iteration
-- TODO: update resume
-- DONE: initial commit
-```
-
----
-
-### credit where credit is due
+### credit where credit is due 
 - *idea "borrowed" from* [***David Zhao***](https://davidzhao98.github.io/)*, solid presentation*
-- [favicon generator](https://realfavicongenerator.net/)
+- [***favicon generator***](https://realfavicongenerator.net/)
+- [***Pixel Art***](https://www.pixilart.com/draw) *for them pixels*
