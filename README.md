@@ -4,6 +4,12 @@
 
 ### update log 
 ```
+UPDATE 1.0.2 :
+tbd.
+    + added more credit
+    + added updated resume
+```
+```
 UPDATE 1.0.1 :
 Sunday, 6/5/2022 
     + added Zoni graphics
@@ -24,3 +30,5 @@ Wednesday, 5/11/2022
 - *idea "borrowed" from* [***David Zhao***](https://davidzhao98.github.io/)*, solid presentation*
 - [***favicon generator***](https://realfavicongenerator.net/)
 - [***Pixel Art***](https://www.pixilart.com/draw) *for them pixels*
+  - [***Son of Atom***](https://www.deviantart.com/sonofatom101) *for that Zoni inspiration*
+    - [***Ratchet & Clank***](https://en.wikipedia.org/wiki/Ratchet_%26_Clank) *for being the best of games*
