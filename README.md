@@ -5,7 +5,7 @@
 ### update log 
 ```
 UPDATE 1.0.2 :
-tbd.
+Monday, 6/6/2022
     + added more credit
     + added updated resume
 ```
