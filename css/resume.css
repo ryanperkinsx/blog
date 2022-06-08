@@ -9,12 +9,12 @@ body::-webkit-scrollbar {
     display: none; /* for Chrome, Safari, and Opera */
 }
 
+p {
+    color: #ffffff;
+}
+
 .resume-body-wrapper {
     display: block;
-    /*grid-template-columns: 1fr 8fr 1fr;*/
-    /*grid-template-rows: 1fr;*/
-    /*grid-template-areas: "home-button resume rb";*/
-    /*position: relative;*/
 }
 
 .resume {
@@ -29,7 +29,6 @@ body::-webkit-scrollbar {
 
 .home-button {
     display: block;
-    grid-area: home-button;
 }
 
 .zoni-img {
@@ -43,8 +42,4 @@ body::-webkit-scrollbar {
 .zoni-img:hover {
     transform: scale(1.25);
     cursor: pointer;
-}
-
-.right-buffer {
-    grid-area: rb;
 }
