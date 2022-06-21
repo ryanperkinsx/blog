@@ -20,8 +20,10 @@ RELEASE 1.0.0 : Wednesday, 5/11/2022
     Tuesday, 6/7/2022
         + added #ffffff text
         
-    Monday, 6/20/2022 
+    Saturday, 6/18/2022 
         + attempted fix for mobile
+        + added Block.js
+        + added me.html
 ```
 
 ---
