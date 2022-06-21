@@ -4,25 +4,24 @@
 
 ### update log
 ```
-RELEASE 1.0.0 : Initial Commit
-Wednesday, 5/11/2022
+RELEASE 1.0.0 : Wednesday, 5/11/2022
     
-    UPDATE 1.0.1 :
     Sunday, 6/5/2022 
         + added Zoni graphics
         + added resume.html (referenced David's for mobile formatting)
         + added resume.css
         + added Zoni home button
         - removed bear graphics
-      
-    UPDATE 1.0.2 :
+        
     Monday, 6/6/2022
         + added more credit
         + added updated resume
         
-    UPDATE 1.0.3 :
     Tuesday, 6/7/2022
         + added #ffffff text
+        
+    Monday, 6/20/2022 
+        + attempted fix for mobile
 ```
 
 ---
