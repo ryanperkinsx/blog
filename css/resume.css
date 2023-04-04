@@ -1,6 +1,6 @@
 html,
 body {
-    background: #ffffff;
+    background: #000000;
 }
 
 p {
@@ -36,4 +36,22 @@ p {
 .zoni-img:hover {
     transform: scale(1.25);
     cursor: pointer;
+}
+
+@media (min-width: 300px) and (max-width: 859px) {
+    .resume-body-wrapper {
+        width: 97%;
+        margin: auto;
+    }
+
+    .resume {
+        width: 97%;
+    }
+}
+
+@media (orientation: portrait) {
+    .resume-body-wrapper {
+        width: 100%;
+        margin: auto;
+    }
 }
