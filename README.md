@@ -24,6 +24,11 @@ RELEASE 1.0.0 : Wednesday, 5/11/2022
         + attempted fix for mobile
         + added Block.js
         + added me.html
+        
+    Monday, 4/3/2023
+        + added mobile fix
+        + updated some alt tags
+        + updated resume
 ```
 
 ---
