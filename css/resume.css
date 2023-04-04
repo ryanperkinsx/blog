@@ -34,8 +34,8 @@ body {
     cursor: pointer;
 }
 
-@media (min-width: 250px) and (max-width: 850px) {
-    body {
+@media (min-width: 250px) and (max-width: 950px) {
+    .resume-body-wrapper {
         background: #ffffff;
     }
 
@@ -45,7 +45,7 @@ body {
 }
 
 @media (orientation: portrait) {
-    body {
+    .resume-body-wrapper {
         background: #ffffff;
     }
 
