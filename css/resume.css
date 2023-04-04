@@ -1,10 +1,6 @@
 html,
 body {
-    background: #ffffff;
-}
-
-p {
-    color: #ffffff;
+    background: #000000;
 }
 
 .resume-body-wrapper {
@@ -38,20 +34,22 @@ p {
     cursor: pointer;
 }
 
-@media (min-width: 300px) and (max-width: 859px) {
-    .resume-body-wrapper {
-        width: 97%;
-        margin: auto;
+@media (min-width: 250px) and (max-width: 850px) {
+    body {
+        background: #ffffff;
     }
 
-    .resume {
+     .resume {
         width: 97%;
     }
 }
 
 @media (orientation: portrait) {
-    .resume-body-wrapper {
+    body {
+        background: #ffffff;
+    }
+
+    .resume {
         width: 100%;
-        margin: auto;
     }
 }
