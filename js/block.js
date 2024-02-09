@@ -1,6 +1,6 @@
 class Block extends HTMLElement {
     constructor() {
-        super(); // always call super duper
+        super(); // always call super-duper
 
         // set and return this.shadowRoot
         const shadow = this.attachShadow({mode: "open"});
