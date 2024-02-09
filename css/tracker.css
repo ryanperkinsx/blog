@@ -1,0 +1,10 @@
+html,
+body {
+    background: #000000;
+}
+
+.dropzone {
+    border: 5px solid #ffffff;
+    width: 200px;
+    height: 100px;
+}
