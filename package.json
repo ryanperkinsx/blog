@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ryanperkinsx/ryanperkinsx.github.io/issues"
   },
-  "homepage": "https://github.com/ryanperkinsx/ryanperkinsx.github.io"
+  "homepage": "https://github.com/ryanperkinsx/ryanperkinsx.github.io",
+  "dependencies": {
+    "sql.js": "^1.10.2"
+  }
 }
