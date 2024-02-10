@@ -3,8 +3,38 @@ body {
     background: #000000;
 }
 
-.dropzone {
+p {
+    color: #ffffff;
+}
+
+.tracker-body-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    gap: 0 0;
+    grid-template-areas:
+    ".     .      .     ."
+    ".     dz     fm    ."
+    ".     .      .     .";
+    position: relative;
+}
+
+.right-buffer {
+    grid-area: rb;
+}
+
+.drop-zone {
+    grid-area: dz;
     border: 5px solid #ffffff;
-    width: 200px;
-    height: 100px;
+    width: 300px;
+    height: 300px;
+    text-align: center;
+    font-size: x-small;
+}
+
+.file-menu {
+    grid-area: fm;
+    border: 5px solid #ffffff;
+    width: 150px;
+    height: 300px;
 }
