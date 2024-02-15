@@ -19,7 +19,7 @@ RELEASE 1.0.0 : Wednesday, 5/11/2022
         
     Saturday, 6/18/2022 
         + attempted fix for mobile
-        + added block.js
+        + added block-card.js
         + added me.html
         
     Monday, 4/3/2023

@@ -38,3 +38,9 @@ p {
     width: 150px;
     height: 300px;
 }
+
+.file-menu-item-wrapper {
+    border: 5px solid #d97637;
+    width: 1fr;
+    height: 50px;
+}
