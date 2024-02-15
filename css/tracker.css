@@ -9,6 +9,8 @@ p {
 
 .tracker-body-wrapper {
     display: grid;
+    font-family: 'Courier New', monospace;
+    text-align: justify;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
     gap: 0 0;
