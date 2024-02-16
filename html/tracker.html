@@ -23,14 +23,18 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer">
     </script>
-    <script type="text/javascript" src="../js/tracker.js"></script>
+    <script type="module" src="../js/tracker.js"></script>
+    <script type="module" src="../js/file-menu-item.js"></script>
+    <script type="module" src="../js/sql.js"></script>
+    <script type="module" src="../js/drop-zone.js"></script>
 </head>
 <body>
     <div class="tracker-body-wrapper">
         <div id="drop-zone" class="drop-zone">
-            <p>Drag one or more files to this <i>drop zone</i>.</p>
+            <p>drag one or more files into this <b><i>drop zone</i></b>.</p>
+            <p>[dropzone is exclusive to sqlite files]</p>
         </div>
-        <div id="file-menu" class="file-menu">
+        <div id="file-menu" class="file-menu-wrapper">
         </div>
     </div>
 </body>

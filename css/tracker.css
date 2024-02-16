@@ -34,15 +34,41 @@ p {
     font-size: x-small;
 }
 
-.file-menu {
+.file-menu-wrapper {
     grid-area: fm;
     border: 5px solid #ffffff;
-    width: 150px;
+    width: 300px;
     height: 300px;
 }
 
-.file-menu-item-wrapper {
-    border: 5px solid #d97637;
-    width: 1fr;
-    height: 50px;
+.file-item-wrapper {
+    border: 2px solid #ffffff;
+    border-top: hidden;
+    border-right: hidden;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 8px 0 8px;
+    text-align: left;
+}
+
+.file-item-name {
+    cursor: pointer;
+    display: inline;
+    font-size: x-small;
+    margin: 0;
+    text-align: left;
+    padding-left: 5px;
+    padding-top: 8px;
+    width: 90%;
+}
+
+.file-item-close {
+    cursor: pointer;
+    display: inline;
+    font-size: x-small;
+    margin-right: 5px;
+    order: 1;
+    /*margin-left: 80%;*/
+    /*margin-top: 10px;*/
+    /*margin-bottom: 2px;*/
 }
