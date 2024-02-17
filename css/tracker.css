@@ -48,7 +48,7 @@ p {
 
 .file-menu-wrapper::-webkit-scrollbar {
     display: none;
-}
+}  /* hides the scrollbar */
 
 .file-item-wrapper {
     border: 2px solid #ffffff;
@@ -60,7 +60,7 @@ p {
     text-align: left;
 }
 
-.file-item-name {
+.file-item-label {
     cursor: pointer;
     display: inline;
     font-size: small;
