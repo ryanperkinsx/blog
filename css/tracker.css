@@ -10,35 +10,44 @@ p {
 .tracker-body-wrapper {
     display: grid;
     font-family: 'Courier New', monospace;
-    text-align: justify;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
+    grid-template-rows: 2fr 1fr;
     gap: 0 0;
     grid-template-areas:
-    ".     .      .     ."
-    ".     dz     fm    ."
-    ".     .      .     .";
-    position: relative;
-}
-
-.right-buffer {
-    grid-area: rb;
+    "dz"
+    "fm";
 }
 
 .drop-zone {
     grid-area: dz;
     border: 5px solid #ffffff;
-    width: 300px;
-    height: 300px;
+    height: 600px;
+    justify-self: center;
+    margin-top: 1%;
     text-align: center;
-    font-size: x-small;
+    width: 60%;
+}
+
+.drop-zone-message {
+    font-size: large;
+}
+
+.drop-zone-note {
+    font-size: small;
 }
 
 .file-menu-wrapper {
-    grid-area: fm;
     border: 5px solid #ffffff;
-    width: 300px;
-    height: 300px;
+    grid-area: fm;
+    height: 100px;
+    justify-self: center;
+    margin-top: 1%;
+    overflow-y: scroll;
+    width: 20%;
+}
+
+.file-menu-wrapper::-webkit-scrollbar {
+    display: none;
 }
 
 .file-item-wrapper {
@@ -47,14 +56,14 @@ p {
     border-right: hidden;
     display: flex;
     justify-content: space-between;
-    margin: 10px 8px 0 8px;
+    margin: 10px 8px;
     text-align: left;
 }
 
 .file-item-name {
     cursor: pointer;
     display: inline;
-    font-size: x-small;
+    font-size: small;
     margin: 0;
     text-align: left;
     padding-left: 5px;
@@ -62,13 +71,10 @@ p {
     width: 90%;
 }
 
-.file-item-close {
+.file-item-remove {
     cursor: pointer;
     display: inline;
     font-size: x-small;
     margin-right: 5px;
     order: 1;
-    /*margin-left: 80%;*/
-    /*margin-top: 10px;*/
-    /*margin-bottom: 2px;*/
 }

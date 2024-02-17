@@ -5,11 +5,12 @@ export const handleFileItemClick = (event) => {
 
 export const handleCloseItemClick = (event) => {
     event.preventDefault();  // prevent default to allow drop
-    console.log("close!");
+    const fileMenu = document.getElementById("file-menu");
+    const fileName = event.target.id.split("-").at(0);
+    fileMenu.removeChild(document.getElementById(`${fileName}-item-wrapper`));
 }
 
 export const createFileMenuItem = (fileName) => {
-
     // wrapper
     const wrapper = document.createElement("div");  // create file menu element
     wrapper.setAttribute("id", `${fileName}-item-wrapper`);
@@ -25,9 +26,9 @@ export const createFileMenuItem = (fileName) => {
 
     // x
     const closeItem = document.createElement("p");  // create file menu element
-    closeItem.setAttribute("id", `close-${fileName}-item`);
-    closeItem.setAttribute("class", "file-item-close");
-    closeItem.textContent = "x";
+    closeItem.setAttribute("id", `${fileName}-remove-button`);
+    closeItem.setAttribute("class", "file-item-remove");
+    closeItem.textContent = "X";
     closeItem.addEventListener("click", (event) => { handleCloseItemClick(event); });
     wrapper.appendChild(closeItem);
 
