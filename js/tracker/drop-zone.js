@@ -18,13 +18,11 @@ class DropZone extends HTMLElement {
                 height: 100%;
                 width: 100%;
             }
-        
             .message {
                 margin: 0;
                 padding: 5% 0 0 0;
                 font-size: large;
             }
-        
             .note {
                 font-size: small;
             }
@@ -36,28 +34,20 @@ class DropZone extends HTMLElement {
 
         shadowRoot.querySelector(".wrapper").addEventListener("dragover", this.handleDragOver);
         shadowRoot.querySelector(".wrapper").addEventListener('drop', this.handleDrop);
-
-        console.log("Loading sql-wasm...");
-        this.loadWasm().then(value => {
-            this.sql = value;
-            console.log("sql-wasm loaded.");
-        }).catch(res => {
-            console.log("Error loading sql-wasm.");
-            console.log(res);
-        });
-
+        console.log(`${this.id} connected.`);
     }
 
     disconnectedCallback() {
         this.shadowRoot.querySelector(".wrapper").removeEventListener('drag', this.handleDragOver);
         this.shadowRoot.querySelector(".wrapper").removeEventListener('drop', this.handleDrop);
+        console.log(`${this.id} disconnected.`)
     }
 
     handleDragOver(event) {
         event.preventDefault();  // prevent default behavior to allow drop
     }
 
-    handleDrop(event, sql) {
+    handleDrop(event) {
         event.preventDefault();  // prevent default behavior (opens file)
         console.log("File(s) dropped.");
 
@@ -68,6 +58,7 @@ class DropZone extends HTMLElement {
                     const file = item.getAsFile();
 
                     if (file) {
+                        const {sql} = this;
                         const fileName = file.name;
                         console.log(`… file[${i}].name = ${fileName}`);
                         const fileMenu = document.getElementById("file-menu");
@@ -91,7 +82,7 @@ class DropZone extends HTMLElement {
                         // try to initialize a database w/ the file
                         file.arrayBuffer().then(buff => {
                             const fileArray = new Uint8Array(buff);
-                            const db = new this.sql.Database(fileArray);
+                            const db = new sql.Database(fileArray);
 
                             dbIntegrityCheck(db).then(() => {
                                 isSqlLiteFile = true;

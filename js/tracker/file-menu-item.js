@@ -1,5 +1,3 @@
-// ref. https://javascript.info/custom-elements
-
 class FileMenuItem extends HTMLElement {
     constructor() {
         super();  // always call super-duper
@@ -18,7 +16,6 @@ class FileMenuItem extends HTMLElement {
                 margin: 10px 8px;
                 text-align: left;
             }
-        
             .label {
                 color: #ffffff;
                 cursor: pointer;
@@ -28,7 +25,6 @@ class FileMenuItem extends HTMLElement {
                 text-align: left;
                 width: 90%;
             }
-        
             .remove {
                 cursor: pointer;
                 display: inline;
@@ -36,10 +32,15 @@ class FileMenuItem extends HTMLElement {
                 margin: 0 4px 0 0;
                 order: 1;
             }
-        
             .remove:after {
                 content: '\\d7';
                 color: #ffffff;
+                font-size: medium;
+            }
+            .remove:after {
+                content: '\\d7';
+                color: #ffffff;
+                font-size: medium;
             }
         </style>
         <div class="wrapper">
@@ -53,12 +54,14 @@ class FileMenuItem extends HTMLElement {
 
         // TODO: export button
         // const exportItem = document.createElement("div");
-        // exportItem.style.cursor = "pointer";
+
+        console.log(`${this.id} connected.`)
     }
 
     disconnectedCallback() {
         this.shadowRoot.querySelector(".label").addEventListener('click', this.handleLabelClick);
         this.shadowRoot.querySelector(".remove-button").addEventListener('click', this.handleRemoveClick);
+        console.log(`${this.id} disconnected.`)
     }
 
     handleLabelClick(event) {

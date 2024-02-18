@@ -25,7 +25,7 @@ body {
     width: 60%;
 }
 
-.file-menu-wrapper {
+.file-menu {
     border: 5px solid #ffffff;
     display: inline;
     grid-area: fm;
@@ -36,22 +36,11 @@ body {
     width: 40%;
 }
 
-.file-menu-wrapper::-webkit-scrollbar {
+.file-menu::-webkit-scrollbar {
     display: none;
-}  /* hides the scrollbar */
-
-.file-item-remove:after {
-    content: '\d7';
-    color: #ffffff;
-    font-size: medium;
 }
 
-/*.open-file-window-close:after {*/
-/*    content: '\d7';*/
-/*    color: #ffffff;*/
-/*}*/
-
-.race-menu-wrapper {
+.race-menu {
     border: 5px solid #ffffff;
     display: inline;
     grid-area: rm;
@@ -61,6 +50,13 @@ body {
     width: 40%;
 }
 
-.race-menu-wrapper::-webkit-scrollbar {
+.race-menu::-webkit-scrollbar {
     display: none;
-}  /* hides the scrollbar */
+}
+
+
+
+/*.open-file-window-close:after {*/
+/*    content: '\d7';*/
+/*    color: #ffffff;*/
+/*}*/
