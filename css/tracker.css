@@ -3,78 +3,64 @@ body {
     background: #000000;
 }
 
-p {
-    color: #ffffff;
-}
-
-.tracker-body-wrapper {
+.wrapper {
     display: grid;
     font-family: 'Courier New', monospace;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: 2fr 1fr;
     gap: 0 0;
     grid-template-areas:
-    "dz"
-    "fm";
+    "dz dz"
+    "fm rm";
 }
 
 .drop-zone {
     grid-area: dz;
-    border: 5px solid #ffffff;
-    height: 600px;
     justify-self: center;
-    margin-top: 1%;
+    border: 5px solid #ffffff;
+    color: #ffffff;
+    height: 600px;
+    position: relative;
     text-align: center;
     width: 60%;
 }
 
-.drop-zone-message {
-    font-size: large;
-}
-
-.drop-zone-note {
-    font-size: small;
-}
-
 .file-menu-wrapper {
     border: 5px solid #ffffff;
+    display: inline;
     grid-area: fm;
     height: 100px;
-    justify-self: center;
-    margin-top: 1%;
+    justify-self: right;
+    margin: 20px 10px 0 0;
     overflow-y: scroll;
-    width: 20%;
+    width: 40%;
 }
 
 .file-menu-wrapper::-webkit-scrollbar {
     display: none;
 }  /* hides the scrollbar */
 
-.file-item-wrapper {
-    border: 2px solid #ffffff;
-    border-top: hidden;
-    border-right: hidden;
-    display: flex;
-    justify-content: space-between;
-    margin: 10px 8px;
-    text-align: left;
+.file-item-remove:after {
+    content: '\d7';
+    color: #ffffff;
+    font-size: medium;
 }
 
-.file-item-label {
-    cursor: pointer;
+/*.open-file-window-close:after {*/
+/*    content: '\d7';*/
+/*    color: #ffffff;*/
+/*}*/
+
+.race-menu-wrapper {
+    border: 5px solid #ffffff;
     display: inline;
-    font-size: small;
-    margin: 0;
-    text-align: left;
-    padding-left: 5px;
-    padding-top: 8px;
-    width: 90%;
+    grid-area: rm;
+    height: 100px;
+    margin: 20px 0 0 10px;
+    overflow-y: scroll;
+    width: 40%;
 }
 
-.file-item-remove {
-    cursor: pointer;
-    display: inline;
-    font-size: x-small;
-    margin-right: 5px;
-    order: 1;
-}
+.race-menu-wrapper::-webkit-scrollbar {
+    display: none;
+}  /* hides the scrollbar */
