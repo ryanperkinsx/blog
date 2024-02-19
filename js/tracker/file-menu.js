@@ -7,15 +7,15 @@ class FileMenu extends HTMLElement {
     connectedCallback() {
         const {shadowRoot} = this;
         shadowRoot.innerHTML = `<style>
-            .wrapper { }
+            .file-menu-wrapper { }
         </style>
-        <div class="wrapper">
+        <div id="file-menu-wrapper" class="file-menu-wrapper">
         </div>`;
-        console.log(`${this.id} connected.`)
+        console.log(`${this.id}: added to the DOM.`)
     }
 
     disconnectedCallback() {
-        console.log(`${this.id} disconnected.`)
+        console.log(`${this.id}: removed from the the DOM.`)
     }  // placeholder
 }
 

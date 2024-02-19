@@ -11,11 +11,11 @@ class RaceMenu extends HTMLElement {
         </style>
         <div class="wrapper">
         </div>`;
-        console.log(`${this.id} connected.`)
+        console.log(`${this.id}: added to the DOM.`)
     }
 
     disconnectedCallback() {
-        console.log(`${this.id} disconnected.`)
+        console.log(`${this.id}: removed from the the DOM.`)
     }
 }
 
