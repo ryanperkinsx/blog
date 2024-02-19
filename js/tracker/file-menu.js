@@ -12,6 +12,8 @@ class FileMenu extends HTMLElement {
         <div id="file-menu-wrapper" class="file-menu-wrapper">
         </div>`;
         console.log(`${this.id}: added to the DOM.`)
+
+        // TODO: add option for a new database
     }
 
     disconnectedCallback() {

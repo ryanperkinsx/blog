@@ -1,4 +1,4 @@
-class RaceMenu extends HTMLElement {
+class RaceDialog extends HTMLElement {
     constructor() {
         super();  // always call super-duper
         this.attachShadow({mode: 'open'});
@@ -7,21 +7,20 @@ class RaceMenu extends HTMLElement {
     connectedCallback() {
         const {shadowRoot} = this;
         shadowRoot.innerHTML = `<style>
-            .race-menu-wrapper { }
+            .race-dialog-wrapper { }
         </style>
-        <div class="race-menu-wrapper">
+        <div id="race-dialog-wrapper" class="race-dialog-wrapper">
         </div>`;
         console.log(`${this.id}: added to the DOM.`)
 
-        // TODO: build race menu
-        // TODO: add race menu options i.e. add, remove
-        // TODO: open race page handler
+        // TODO: save button
+        // TODO: update form
     }
 
     disconnectedCallback() {
         console.log(`${this.id}: removed from the the DOM.`)
-    }
+    }  // placeholder
 }
 
 // add to the registry
-customElements.define("race-menu", RaceMenu);
+customElements.define("race-dialog", RaceDialog);

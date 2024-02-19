@@ -3,7 +3,7 @@ body {
     background: #000000;
 }
 
-.wrapper {
+.tracker-wrapper {
     display: grid;
     font-family: 'Courier New', monospace;
     grid-template-columns: 1fr 1fr;
@@ -53,10 +53,3 @@ body {
 .race-menu::-webkit-scrollbar {
     display: none;
 }
-
-
-
-/*.open-file-window-close:after {*/
-/*    content: '\d7';*/
-/*    color: #ffffff;*/
-/*}*/

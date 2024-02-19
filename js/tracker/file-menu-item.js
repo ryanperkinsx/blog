@@ -63,6 +63,8 @@ class FileMenuItem extends HTMLElement {
     handleLabelClick(event) {
         event.preventDefault();
         console.log(`${this.id}: ya clicked me, boy!`);
+
+        // TODO: display training block
     }
 
     handleRemoveClick(event) {
@@ -76,16 +78,3 @@ class FileMenuItem extends HTMLElement {
 
 // add to the registry
 customElements.define("file-menu-item", FileMenuItem);
-
-// called when the element is moved to a new document
-// (happens in document.adoptNode, very rarely used)
-// adoptedCallback() {
-// console.log("Custom element moved to new page.");
-// }
-
-// called when one of attributes listed above is modified
-// attributeChangedCallback(name, oldValue, newValue) {
-//     console.log(`Attribute ${name} has changed.`);
-//     console.log(`Old value: ${oldValue}`);
-//     console.log(`New value: ${newValue}`);
-// }
