@@ -1,19 +1,25 @@
 // ref. https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API/File_drag_and_drop
 // ref. https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/drop_event
+"use strict";
 import { dbIntegrityCheck } from "../sql.js";
 
-class DropZone extends HTMLElement {
+console.log("loading sql-wasm...");
+window.initSqlJs({
+    locateFile: () => "https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.2/sql-wasm.wasm"
+}).then((val) => {
+    const sql = val;
+    console.log("sql-wasm loaded.");
 
-    constructor() {
-        super();  // always call super-duper
-        this.attachShadow({mode: 'open'});
-    }
+    class DropZone extends HTMLElement {
 
-    // browser calls this method when the element is added to the document
-    // (can be called many times if an element is repeatedly added/removed)
-    connectedCallback() {
-        const {shadowRoot} = this;
-        shadowRoot.innerHTML = `<style>
+        constructor() {
+            super();  // always call super-duper
+            this.attachShadow({mode: 'open'});
+        }
+
+        connectedCallback() {
+            const { shadowRoot } = this;
+            shadowRoot.innerHTML = `<style>
             .wrapper { 
                 height: 100%;
                 width: 100%;
@@ -32,51 +38,49 @@ class DropZone extends HTMLElement {
             <p class="note">[dropzone is exclusive to sqlite files]</p>
         </div>`;
 
-        shadowRoot.querySelector(".wrapper").addEventListener("dragover", this.handleDragOver);
-        shadowRoot.querySelector(".wrapper").addEventListener('drop', this.handleDrop);
-        console.log(`${this.id} connected.`);
-    }
+            shadowRoot.querySelector(".wrapper").addEventListener("dragover", this.handleDragOver);
+            shadowRoot.querySelector(".wrapper").addEventListener('drop', this.handleDrop);
+            console.log(`${this.id} connected.`);
+        }
 
-    disconnectedCallback() {
-        this.shadowRoot.querySelector(".wrapper").removeEventListener('drag', this.handleDragOver);
-        this.shadowRoot.querySelector(".wrapper").removeEventListener('drop', this.handleDrop);
-        console.log(`${this.id} disconnected.`)
-    }
+        disconnectedCallback() {
+            this.shadowRoot.querySelector(".wrapper").removeEventListener('drag', this.handleDragOver);
+            this.shadowRoot.querySelector(".wrapper").removeEventListener('drop', this.handleDrop);
+            console.log(`${this.id} disconnected.`)
+        }
 
-    handleDragOver(event) {
-        event.preventDefault();  // prevent default behavior to allow drop
-    }
+        handleDragOver(event) {
+            event.preventDefault();  // prevent default behavior to allow drop
+        }
 
-    handleDrop(event) {
-        event.preventDefault();  // prevent default behavior (opens file)
-        console.log("File(s) dropped.");
+        handleDrop(event) {
+            event.preventDefault();  // prevent default behavior (opens file)
+            console.log("File(s) dropped.");
 
-        if (event.dataTransfer.items) {
-            [...event.dataTransfer.items].forEach((item, i) => {  // use DataTransferItemList interface to access the file(s)
-
-                if (item.kind === "file") {  // if dropped items aren't files, reject them
-                    const file = item.getAsFile();
-
-                    if (file) {
-                        const {sql} = this;
+            try {
+                // use DataTransferItemList interface to access the file(s)
+                [...event.dataTransfer.items].forEach((item) => {
+                    // if item isn't a file, reject it
+                    if (item.kind === "file") {
+                        const file = item.getAsFile();
                         const fileName = file.name;
-                        console.log(`… file[${i}].name = ${fileName}`);
                         const fileMenu = document.getElementById("file-menu");
-                        const fileMenuItems = fileMenu.getElementsByClassName("file-item-wrapper");
-                        let isDuplicateFile = false;
-                        let isSqlLiteFile = false;
+                        const fileMenuItems = fileMenu.getElementsByTagName("file-menu-item");
+                        let { isDuplicateFile, isSqlLiteFile } = false;
 
+                        // check the already loaded files
                         [...fileMenuItems].forEach((item) => {
-                            console.log(`${item.id}`)
-                            console.log(`${fileName}`)
-                            if (item.id.startsWith(fileName)) {  // if any of the file-menu-item-wrappers equal the uploaded file's name
+                            // if any of the file menu items equal the uploaded file's name
+                            if (item.id.startsWith(fileName)) {
                                 isDuplicateFile = true;
-                            }
-                        })  // end loop
 
+                            }
+                        })
+
+                        // skip duplicate
                         if (isDuplicateFile) {
                             console.log(`"${fileName}" already exists! skipping.`);
-                            return;  // skip duplicate
+                            return;
                         }
 
                         // try to initialize a database w/ the file
@@ -85,9 +89,9 @@ class DropZone extends HTMLElement {
                             const db = new sql.Database(fileArray);
 
                             dbIntegrityCheck(db).then(() => {
-                                isSqlLiteFile = true;
                                 console.log(`${fileName}: database connection was successful.`);
                                 console.log(`${fileName}: saving file and closing connection...`);
+                                isSqlLiteFile = true;
                             }).catch(res => {
                                 console.log(res);
                                 console.log(`${fileName}: database connection was unsuccessful.`);
@@ -100,31 +104,24 @@ class DropZone extends HTMLElement {
                             console.log(res);
                             console.log(`${fileName}: invalid file.`);
                         }).finally(() => {
-                            if (!isSqlLiteFile) {  // if it's NOT a valid SQLite file, skip and move to the next
+                            // if it's NOT a valid SQLite file, skip and move to the next
+                            if (!isSqlLiteFile) {
                                 console.log(`${fileName}: not a sqlite file! skipping.`);
                             } else {
                                 const newItem = document.createElement("file-menu-item");
                                 newItem.setAttribute("id", fileName)
-                                fileMenu.appendChild(newItem);  // add it to the menu
+                                fileMenu.shadowRoot.appendChild(newItem);  // add it to the menu
                                 console.log(`${fileName}: file saved.`);
                             }
                         });
                     }
-                }
-            });
-        } else {
-            [...event.dataTransfer.files].forEach((file, i) => {  // use DataTransfer interface to access the file(s)
-                console.log(`… file[${i}].name = ${file.name}`);
-            });
+                });
+            } catch (e) {
+                console.log(e);
+                console.log("unable to load files!");
+            }
         }
     }
 
-    async loadWasm() {
-        // pull the wasm from CDN
-        return await window.initSqlJs({
-            locateFile: () => "https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.2/sql-wasm.wasm"
-        });
-    }
-}
-
-customElements.define("drop-zone", DropZone);
+    customElements.define("drop-zone", DropZone);
+});

@@ -28,19 +28,13 @@ class FileMenuItem extends HTMLElement {
             .remove {
                 cursor: pointer;
                 display: inline;
-                font-size: small;
+                font-size: medium;
                 margin: 0 4px 0 0;
                 order: 1;
             }
             .remove:after {
                 content: '\\d7';
                 color: #ffffff;
-                font-size: medium;
-            }
-            .remove:after {
-                content: '\\d7';
-                color: #ffffff;
-                font-size: medium;
             }
         </style>
         <div class="wrapper">
@@ -50,7 +44,7 @@ class FileMenuItem extends HTMLElement {
 
         shadowRoot.querySelector(".label").textContent = this.getAttribute("id");
         shadowRoot.querySelector(".label").addEventListener('click', this.handleLabelClick);
-        shadowRoot.querySelector(".remove-button").addEventListener('click', this.handleRemoveClick);
+        shadowRoot.querySelector(".remove").addEventListener('click', this.handleRemoveClick);
 
         // TODO: export button
         // const exportItem = document.createElement("div");
@@ -60,7 +54,7 @@ class FileMenuItem extends HTMLElement {
 
     disconnectedCallback() {
         this.shadowRoot.querySelector(".label").addEventListener('click', this.handleLabelClick);
-        this.shadowRoot.querySelector(".remove-button").addEventListener('click', this.handleRemoveClick);
+        this.shadowRoot.querySelector(".remove").addEventListener('click', this.handleRemoveClick);
         console.log(`${this.id} disconnected.`)
     }
 
@@ -71,7 +65,12 @@ class FileMenuItem extends HTMLElement {
 
     handleRemoveClick(event) {
         event.preventDefault();
-        document.getElementById("file-menu").removeChild(document.getElementById(this.id));
+        const fileMenu = document.getElementById("file-menu");
+        console.log(event.target.id);
+        console.log(event.shadowRoot);
+        console.log(fileMenu);
+        console.log(fileMenu.shadowRoot.getElementById(this.parentElement.id));
+        document.getElementById("file-menu").shadowRoot.removeChild(document.getElementById(this.id));
         console.log(`${this.id}: file menu item removed.`)
     }
 }
