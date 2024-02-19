@@ -31,10 +31,23 @@ initSqlJs(config).then((sql) => {
             .drop-zone-note {
                 font-size: small;
             }
+            a:link {
+                color: #65cef5;
+            }
+            a:visited {
+                color: #f6f66c;
+            }
+            a:hover {
+                color: #ff0000;
+            }
         </style>
         <div id="drop-zone-wrapper" class="drop-zone-wrapper">
             <p class="drop-zone-message">drag one or more files into this <b><i>drop zone</i></b>.</p>
-            <p class="drop-zone-note">[dropzone is exclusive to sqlite files]</p>
+            <p class="drop-zone-note">
+                [the drop zone is exclusive to 
+                <a target="_blank" rel="noopener noreferrer" href="https://www.sqlite.org/index.html">
+                    <i><u>sqlite files</u></i></a>]
+            </p>
         </div>`;
 
             shadowRoot.getElementById("drop-zone-wrapper").addEventListener("dragover", this.handleDragOver);

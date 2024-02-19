@@ -33,7 +33,7 @@ body {
     justify-self: right;
     margin: 20px 10px 0 0;
     overflow-y: scroll;
-    width: 40%;
+    width: 50%;
 }
 
 .file-menu::-webkit-scrollbar {
@@ -47,7 +47,7 @@ body {
     height: 100px;
     margin: 20px 0 0 10px;
     overflow-y: scroll;
-    width: 40%;
+    width: 50%;
 }
 
 .race-menu::-webkit-scrollbar {
