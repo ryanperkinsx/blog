@@ -20,8 +20,8 @@ class FileDialog extends HTMLElement {
                 top: 50vh;
                 left: 50vw;
                 transform: translate(-50%, -50%);
-                height: 60%;
-                width: 40%;
+                height: 700px;
+                width: 700px;
                 background-color: rgb(0, 0, 0);
                 border: 5px solid rgba(255, 255, 255, 1);
             }

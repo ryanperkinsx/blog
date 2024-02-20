@@ -79,8 +79,11 @@ class FileMenuItem extends HTMLElement {
         shadowRoot.getElementById(`fmi-${fileName}-label`).removeEventListener("click", this.handleLabelClick);
         shadowRoot.getElementById(`fmi-${fileName}-export`).removeEventListener("click", this.handleExportClick);
         shadowRoot.getElementById(`fmi-${fileName}-remove`).removeEventListener("click", this.handleRemoveClick);
+        console.log(`${fileName}: closing database connection.`);
         databases[fileName].close().then(() => {
+            console.log(`${fileName}: database connection closed. deleting database...`);
             delete databases[fileName];
+            console.log(`${fileName}: database deleted.`);
         }).catch((res) => {
             console.log(res);
             console.log(`${fileName}: unable to delete database.`);

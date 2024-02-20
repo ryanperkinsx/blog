@@ -19,21 +19,21 @@ body {
     grid-area: dz;
     justify-self: center;
     color: #ffffff;
-    height: 600px;
+    height: 700px;
     position: relative;
     text-align: center;
-    width: 65%;
+    width: 900px;
 }
 
 .file-menu {
     border: 5px solid #ffffff;
     display: inline;
     grid-area: fm;
-    height: 30%;
+    height: 100px;
     justify-self: right;
-    margin: 5% 5% 0 0;
+    margin: 40px 40px 0 0;
     overflow-y: scroll;
-    width: 50%;
+    width: 300px;
 }
 
 .file-menu::-webkit-scrollbar {
@@ -44,10 +44,10 @@ body {
     border: 5px solid #ffffff;
     display: inline;
     grid-area: rm;
-    height: 30%;
-    margin: 5% 0 0 5%;
+    height: 100px;
+    margin: 40px 0 0 40px;
     overflow-y: scroll;
-    width: 50%;
+    width: 300px;
 }
 
 .race-menu::-webkit-scrollbar {
