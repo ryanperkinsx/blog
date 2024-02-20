@@ -1,4 +1,4 @@
-import { dbFileArrays } from "./drop-zone.js";
+import { databases } from "../database.js";
 
 class FileMenuItem extends HTMLElement {
     constructor() {
@@ -64,6 +64,7 @@ class FileMenuItem extends HTMLElement {
             <div id="${fileName}-remove" class="file-menu-item-remove"></div>
         </div>`;
 
+        // TODO: make label overflow-x scroll-able
         shadowRoot.getElementById(`${fileName}-label`).addEventListener('click', this.handleLabelClick);
         shadowRoot.getElementById(`${fileName}-export`).addEventListener('click', this.handleExportClick);
         shadowRoot.getElementById(`${fileName}-remove`).addEventListener('click', this.handleRemoveClick);
@@ -99,6 +100,12 @@ class FileMenuItem extends HTMLElement {
         const fileName = this.id.replace("-remove", "");
         const wrapper = fileMenuShadowRoot.getElementById("file-menu-wrapper");
         wrapper.removeChild(fileMenuShadowRoot.getElementById(`${fileName}-menu-item`));
+        databases[fileName].close().then(() => {
+            delete databases[fileName];
+        }).catch((res) => {
+            console.log(res);
+            console.log(`${fileName}: unable to delete database.`);
+        });
     }
 }
 
