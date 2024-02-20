@@ -7,9 +7,9 @@ class FileMenu extends HTMLElement {
     connectedCallback() {
         const {shadowRoot} = this;
         shadowRoot.innerHTML = `<style>
-            .file-menu-wrapper { }
+            .fm-wrapper { }
         </style>
-        <div id="file-menu-wrapper" class="file-menu-wrapper">
+        <div id="fm-wrapper" class="fm-wrapper">
         </div>`;
         console.log(`${this.id}: added to the DOM.`)
 
@@ -28,11 +28,4 @@ customElements.define("file-menu", FileMenu);
 // (happens in document.adoptNode, very rarely used)
 // adoptedCallback() {
 // console.log("Custom element moved to new page.");
-// }
-
-// called when one of attributes listed above is modified
-// attributeChangedCallback(name, oldValue, newValue) {
-//     console.log(`Attribute ${name} has changed.`);
-//     console.log(`Old value: ${oldValue}`);
-//     console.log(`New value: ${newValue}`);
 // }

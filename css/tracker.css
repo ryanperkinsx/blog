@@ -12,26 +12,26 @@ body {
     grid-template-areas:
     "dz dz"
     "fm rm";
+    margin: 2% 0 0 0;
 }
 
 .drop-zone {
     grid-area: dz;
     justify-self: center;
-    border: 5px solid #ffffff;
     color: #ffffff;
     height: 600px;
     position: relative;
     text-align: center;
-    width: 60%;
+    width: 65%;
 }
 
 .file-menu {
     border: 5px solid #ffffff;
     display: inline;
     grid-area: fm;
-    height: 100px;
+    height: 30%;
     justify-self: right;
-    margin: 20px 10px 0 0;
+    margin: 5% 5% 0 0;
     overflow-y: scroll;
     width: 50%;
 }
@@ -44,8 +44,8 @@ body {
     border: 5px solid #ffffff;
     display: inline;
     grid-area: rm;
-    height: 100px;
-    margin: 20px 0 0 10px;
+    height: 30%;
+    margin: 5% 0 0 5%;
     overflow-y: scroll;
     width: 50%;
 }
@@ -55,10 +55,12 @@ body {
 }
 
 .file-dialog {
-    background: #000000;
-    height: 60%;
-    opacity: 0.9;
-    order: 0;
-    position: absolute;
-    width: 60%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(0.3em);
+    display: block;
 }

@@ -9,16 +9,46 @@ class DropZone extends HTMLElement {
     connectedCallback() {
         const { shadowRoot } = this;
         shadowRoot.innerHTML = `<style>
-            .drop-zone-wrapper { 
+            .dz-wrapper { 
                 height: 100%;
                 width: 100%;
             }
-            .drop-zone-message {
+            .dz-border {
+                height: 100%;
+                position: absolute;
+                top: 0;
+                width: 100%;
+            }
+            .dz-border.x {
+                background-repeat: repeat-x;
+                background-size: 12% 0.3em;
+            }
+            .dz-border.y {
+                background-repeat: repeat-y;
+                background-size: 0.3em 12%;
+            }
+            .dz-border.top {
+                background-image: linear-gradient(to right, rgba(255, 255, 255, 0.25) 30%, rgba(255, 255, 255, 0) 0%);
+                background-position: top;
+            }
+            .dz-border.right {
+                background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.25) 30%, rgba(255, 255, 255, 0) 0%);
+                background-position: right;
+            }
+            .dz-border.bottom {
+                background-image: linear-gradient(to left, rgba(255, 255, 255, 0.25) 30%, rgba(255, 255, 255, 0) 0%);
+                background-position: bottom;
+            }
+            .dz-border.left {
+                background-image: linear-gradient(to top, rgba(255, 255, 255, 0.25) 30%, rgba(255, 255, 255, 0) 0%);
+                background-position: left;
+            }
+            .dz-message {
                 margin: 0;
                 padding: 5% 0 0 0;
                 font-size: large;
             }
-            .drop-zone-note {
+            .dz-note {
                 font-size: small;
             }
             a:link {
@@ -31,23 +61,28 @@ class DropZone extends HTMLElement {
                 color: #ff0000;
             }
         </style>
-        <div id="drop-zone-wrapper" class="drop-zone-wrapper">
-            <p class="drop-zone-message">drag one or more files into this <b><i>drop zone</i></b>.</p>
-            <p class="drop-zone-note">
+        <div id="dz-wrapper" class="wrapper"> 
+            <p class="dz-message">drag one or more files into this <b><i>drop zone</i></b>.</p>
+            <p class="dz-note">
                 [the drop zone is exclusive to 
                 <a target="_blank" rel="noopener noreferrer" href="https://www.sqlite.org/index.html">
                     <i><u>sqlite files</u></i></a>]
             </p>
+            <div class="dz-border x top"></div>
+            <div class="dz-border y right"></div>
+            <div class="dz-border x bottom"></div>
+            <div class="dz-border y left"></div>
         </div>`;
 
-        shadowRoot.getElementById("drop-zone-wrapper").addEventListener("dragover", this.handleDragOver);
-        shadowRoot.getElementById("drop-zone-wrapper").addEventListener('drop', this.handleDrop);
+        shadowRoot.getElementById("dz-wrapper").addEventListener("dragover", this.handleDragOver);
+        shadowRoot.getElementById("dz-wrapper").addEventListener("drop", this.handleDrop);
         console.log(`${this.id}: added to the DOM.`);
     }
 
     disconnectedCallback() {
-        this.shadowRoot.getElementById("drop-zone-wrapper").removeEventListener('dragover', this.handleDragOver);
-        this.shadowRoot.getElementById("drop-zone-wrapper").removeEventListener('drop', this.handleDrop);
+        const { shadowRoot } = this;
+        shadowRoot.getElementById("dz-wrapper").removeEventListener("dragover", this.handleDragOver);
+        shadowRoot.getElementById("dz-wrapper").removeEventListener("drop", this.handleDrop);
         console.log(`${this.id}: removed from the the DOM.`)
     }
 
@@ -71,7 +106,7 @@ class DropZone extends HTMLElement {
 
                     // skip duplicate
                     if (!isDuplicateFile) {
-                        console.log(`"${fileName}" already exists! skipping.`);
+                        console.log(`${fileName}: file already exists! skipping.`);
                         return;
                     }
 
@@ -81,7 +116,7 @@ class DropZone extends HTMLElement {
                         databases[fileName] = new Database(fileName, fileArray);
                     }).catch((res) => {
                         console.log(res);
-                        console.log("failure converting file into array! skipping.");
+                        console.log(`${fileName}: unable to convert into array! skipping.`);
                     });
                 } else {
                     console.log("invalid file! skipping.");

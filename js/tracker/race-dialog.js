@@ -7,9 +7,9 @@ class RaceDialog extends HTMLElement {
     connectedCallback() {
         const {shadowRoot} = this;
         shadowRoot.innerHTML = `<style>
-            .race-dialog-wrapper { }
+            .rd-wrapper { }
         </style>
-        <div id="race-dialog-wrapper" class="race-dialog-wrapper">
+        <div id="rd-wrapper" class="rd-wrapper">
         </div>`;
         console.log(`${this.id}: added to the DOM.`)
 
