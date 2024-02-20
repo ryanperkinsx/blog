@@ -4,7 +4,6 @@ class FileMenuItem extends HTMLElement {
     constructor() {
         super();  // always call super-duper
         this.attachShadow({mode: 'open'});
-        this._metadata = null;
     }
 
     connectedCallback() {
@@ -80,6 +79,12 @@ class FileMenuItem extends HTMLElement {
         shadowRoot.getElementById(`fmi-${fileName}-label`).removeEventListener("click", this.handleLabelClick);
         shadowRoot.getElementById(`fmi-${fileName}-export`).removeEventListener("click", this.handleExportClick);
         shadowRoot.getElementById(`fmi-${fileName}-remove`).removeEventListener("click", this.handleRemoveClick);
+        databases[fileName].close().then(() => {
+            delete databases[fileName];
+        }).catch((res) => {
+            console.log(res);
+            console.log(`${fileName}: unable to delete database.`);
+        });
         console.log(`${this.id}: removed from the the DOM.`);
     }
 
@@ -102,12 +107,6 @@ class FileMenuItem extends HTMLElement {
         const fileName = this.id.replace("fmi-", "").replace("-remove", "");
         const wrapper = fileMenuShadowRoot.getElementById("fm-wrapper");
         wrapper.removeChild(fileMenuShadowRoot.getElementById(`fmi-${fileName}`));
-        databases[fileName].close().then(() => {
-            delete databases[fileName];
-        }).catch((res) => {
-            console.log(res);
-            console.log(`${fileName}: unable to delete database.`);
-        });
     }
 }
 

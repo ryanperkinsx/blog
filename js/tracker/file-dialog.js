@@ -47,7 +47,6 @@ class FileDialog extends HTMLElement {
         shadowRoot.getElementById("fd-close").addEventListener("click", this.handleCloseClick);
         console.log(`${this.id}: added to the DOM.`)
 
-
         // TODO: save button
         // TODO: export button
         // TODO: update form

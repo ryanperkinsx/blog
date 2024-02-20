@@ -32,7 +32,12 @@ export class Database {
         }).catch((res) => {
             console.log(res);
             console.log(`${fileName}: validation was unsuccessful! skipping.`);
-            delete databases[fileName];
+            databases[fileName].close().then(() => {
+                delete databases[fileName];
+            }).catch((res) => {
+                console.log(res);
+                console.log(`${fileName}: unable to delete database.`);
+            });
         });
     }
 
