@@ -1,12 +1,14 @@
 import { dbIntegrityCheck } from "../sql.js";
 
+export const dbFileArrays = { }
+
 // CDN: // "https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.2/${filename}"
-const config = {
+const sqlConfig = {
     locateFile: filename => `../../node_modules/sql.js/dist/${filename}`
 }
 
 console.log("loading sql-wasm...");
-initSqlJs(config).then((sql) => {
+initSqlJs(sqlConfig).then((sql) => {
     console.log("sql-wasm loaded.");
 
     class DropZone extends HTMLElement {
@@ -87,19 +89,19 @@ initSqlJs(config).then((sql) => {
 
                         // try to initialize a database w/ the file
                         file.arrayBuffer().then(buff => {
-                            const fileArray = new Uint8Array(buff);
+                            const fileArray = new Uint8Array(buff);  // TODO: I need to save this somewhere...
                             const db = new sql.Database(fileArray);
 
                             console.log(`${fileName}: validating database...`);
                             dbIntegrityCheck(db).then(() => {
                                 console.log(`${fileName}: database validation was successful.`);
                                 const newItem = document.createElement("file-menu-item");
-                                newItem.setAttribute("id", fileName)
+                                newItem.setAttribute("id", `${fileName}-menu-item`);
                                 fileMenu.shadowRoot.getElementById("file-menu-wrapper").appendChild(newItem);
+                                dbFileArrays.fileName = fileArray;
                             }).catch((res) => {
                                 console.log(res);
-                                console.log(`${fileName}: database validation was unsuccessful!`);
-                                console.log("skipping.");
+                                console.log(`${fileName}: database validation was unsuccessful! skipping.`);
                             }).finally(() => {
                                 console.log(`${fileName}: closing connection...`);
                                 db.close();
@@ -107,13 +109,10 @@ initSqlJs(config).then((sql) => {
                             });
                         }).catch((res) => {
                             console.log(res);
-                            console.log(`${fileName}: unable to read file!`);
-                            console.log("skipping.");
-
+                            console.log(`${fileName}: unable to read file! skipping.`);
                         });
                     } else {
-                        console.log("invalid file!");
-                        console.log("skipping.");
+                        console.log("invalid file! skipping.");
                     }
                 });
             } catch (e) {

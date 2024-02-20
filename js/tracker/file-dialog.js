@@ -5,11 +5,11 @@ class FileDialog extends HTMLElement {
     }
 
     connectedCallback() {
-        const {shadowRoot} = this;
+        const { shadowRoot } = this;
         shadowRoot.innerHTML = `<style>
             .file-dialog-wrapper { }
         </style>
-        <div id="file-dialog-wrapper" class="file-dialog-wrapper">
+        <div class="file-dialog-wrapper">
         </div>`;
         console.log(`${this.id}: added to the DOM.`)
 

@@ -26,12 +26,13 @@
     <script src="../node_modules/sql.js/dist/sql-wasm.js"></script>
     <script type="module" src="../js/sql.js"></script>
     <script type="module" src="../js/tracker/drop-zone.js"></script>
+    <script type="module" src="../js/tracker/file-dialog.js"></script>
     <script type="module" src="../js/tracker/file-menu.js"></script>
     <script type="module" src="../js/tracker/file-menu-item.js"></script>
     <script type="module" src="../js/tracker/race-menu.js"></script>
 </head>
 <body>
-<div class="tracker-wrapper">
+<div id="tracker-wrapper" class="tracker-wrapper">
     <drop-zone id="drop-zone" class="drop-zone"></drop-zone>
     <file-menu id="file-menu" class="file-menu"></file-menu>
     <race-menu id="race-menu" class="race-menu"></race-menu>

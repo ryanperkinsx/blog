@@ -12,6 +12,8 @@
 - *shoutout to Mozilla for helping with the drop-zone*:
   - [***link #1***](https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API/File_drag_and_drop)
   - [***link #2***](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/drop_event)
+- [***sql.js***](https://sql.js.org/documentation/) is a wonderful Javascript version of SQLite + [***the repo***](https://github.com/sql-js/sql.js) 
+- export icon CSS by [***gaetanoM***](https://stackoverflow.com/questions/34623447/how-to-create-arrow-down-up-in-css)
 
 ## run locally with Node.js
 
