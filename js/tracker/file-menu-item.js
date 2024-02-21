@@ -8,8 +8,7 @@ class FileMenuItem extends HTMLElement {
 
     connectedCallback() {
         const { shadowRoot, id } = this;
-        const fileName = id.replace("fmi-", "").replace("-menu-item", "");
-
+        const fileName = id.replace("fmi-", "");
         shadowRoot.innerHTML = `<style>
             .fmi-wrapper {
                 border: 2px solid #ffffff;
@@ -95,7 +94,7 @@ class FileMenuItem extends HTMLElement {
         event.preventDefault();
         const fileDialog = document.getElementById("file-dialog");
         const fileName = this.getAttribute("id").replace("fmi-", "").replace("-label", "");
-        fileDialog.setAttribute("fileName", fileName);
+        fileDialog.setAttribute("database", fileName);
         fileDialog.style.display = "block";
     }
 
@@ -110,6 +109,7 @@ class FileMenuItem extends HTMLElement {
         const fileName = this.id.replace("fmi-", "").replace("-remove", "");
         const wrapper = fileMenuShadowRoot.getElementById("fm-wrapper");
         wrapper.removeChild(fileMenuShadowRoot.getElementById(`fmi-${fileName}`));
+
     }
 }
 

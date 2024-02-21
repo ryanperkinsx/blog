@@ -27,6 +27,7 @@ export class Database {
             console.log(`${fileName}: validation was successful!`);
             const menuItem = document.createElement("file-menu-item");
             menuItem.setAttribute("id", `fmi-${fileName}`);
+
             const fileMenu = document.getElementById("file-menu");
             fileMenu.shadowRoot.getElementById("fm-wrapper").appendChild(menuItem);
         }).catch((res) => {
@@ -47,6 +48,17 @@ export class Database {
 
     async close() {
         this._db.close();
+    }
+
+    async getTrainingBlockNames() {
+        return await this._db.exec("SELECT name FROM training_block");
+    }
+
+    async getTrainingBlockByName(name) {
+        const stmt = this._db.prepare("SELECT * FROM training_block WHERE name=:name");
+        const result = await stmt.getAsObject({':name': name});
+        stmt.free();
+        return result;
     }
 }
 

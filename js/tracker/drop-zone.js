@@ -92,7 +92,7 @@ class DropZone extends HTMLElement {
 
     async handleDrop(event) {
         event.preventDefault();  // prevent default behavior (opens file)
-        console.log("File(s) dropped.");
+        console.log("file(s) dropped.");
 
         try {
             // use DataTransferItemList interface to access the file(s)
