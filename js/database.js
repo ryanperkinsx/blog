@@ -13,13 +13,13 @@ console.log("sql-wasm loaded.");
 
 export class Database {
     constructor(fileName, fileArray) {
-        console.log(`${fileName}: loading database...`);
+        console.log(`${fileName}: loading file...`);
         try {
             this._db = new SQL.Database(fileArray);
-            console.log(`${fileName}: database loaded.`);
+            console.log(`${fileName}: file loaded.`);
         } catch (e) {
             console.log(e);
-            throw new Error(`${fileName}: unable to load database.`);
+            throw new Error(`${fileName}: unable to load file.`);
         }
 
         console.log(`${fileName}: validating database...`);
@@ -50,15 +50,16 @@ export class Database {
         this._db.close();
     }
 
-    async getTrainingBlockNames() {
-        return await this._db.exec("SELECT name FROM training_block");
+    async getTrainingBlockIdAndNames() {
+        return await this._db.exec("SELECT training_block_id, name FROM training_block");
     }
 
-    async getTrainingBlockByName(name) {
-        const stmt = this._db.prepare("SELECT * FROM training_block WHERE name=:name");
-        const result = await stmt.getAsObject({':name': name});
-        stmt.free();
-        return result;
+    async getWeeksByTrainingBlockId(id) {
+        return await this._db.exec("SELECT * FROM week WHERE training_block_id=$id", {"$id": id});
+    }
+
+    async getDaysByWeekId(id) {
+        return await this._db.exec("SELECT * FROM day WHERE week_id=$id", {"$id": id});
     }
 }
 

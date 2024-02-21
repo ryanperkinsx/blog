@@ -10,7 +10,7 @@ class FileMenuItem extends HTMLElement {
         const { shadowRoot, id } = this;
         const fileName = id.replace("fmi-", "");
         shadowRoot.innerHTML = `<style>
-            .fmi-wrapper {
+            #fmi-wrapper {
                 border: 2px solid #ffffff;
                 border-top: hidden;
                 border-right: hidden;
@@ -60,7 +60,7 @@ class FileMenuItem extends HTMLElement {
                 content: "\\d7";
             }
         </style>
-        <div class="fmi-wrapper">
+        <div id="fmi-wrapper">
             <p id="fmi-${fileName}-label" class="fmi-label">${fileName}</p>
             <div id="fmi-${fileName}-export" class="fmi-export"></div>
             <div id="fmi-${fileName}-remove" class="fmi-remove"></div>
@@ -94,7 +94,7 @@ class FileMenuItem extends HTMLElement {
         event.preventDefault();
         const fileDialog = document.getElementById("file-dialog");
         const fileName = this.getAttribute("id").replace("fmi-", "").replace("-label", "");
-        fileDialog.setAttribute("database", fileName);
+        fileDialog.setAttribute("filename", fileName);
         fileDialog.style.display = "block";
     }
 

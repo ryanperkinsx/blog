@@ -9,9 +9,26 @@ class DropZone extends HTMLElement {
     connectedCallback() {
         const { shadowRoot } = this;
         shadowRoot.innerHTML = `<style>
-            .dz-wrapper { 
+            #dz-wrapper { 
                 height: 100%;
                 width: 100%;
+            }
+            #dz-message {
+                margin: 0;
+                padding: 5% 0 0 0;
+                font-size: large;
+            }
+            #dz-note {
+                font-size: small;
+            }
+            a:link {
+                color: #65cef5;
+            }
+            a:visited {
+                color: #f6f66c;
+            }
+            a:hover {
+                color: #ff0000;
             }
             .dz-border {
                 height: 100%;
@@ -43,27 +60,12 @@ class DropZone extends HTMLElement {
                 background-image: linear-gradient(to top, rgba(255, 255, 255, 0.25) 30%, rgba(255, 255, 255, 0) 0%);
                 background-position: left;
             }
-            .dz-message {
-                margin: 0;
-                padding: 5% 0 0 0;
-                font-size: large;
-            }
-            .dz-note {
-                font-size: small;
-            }
-            a:link {
-                color: #65cef5;
-            }
-            a:visited {
-                color: #f6f66c;
-            }
-            a:hover {
-                color: #ff0000;
-            }
         </style>
-        <div id="dz-wrapper" class="wrapper"> 
-            <p class="dz-message">drag one or more files into this <b><i>drop zone</i></b>.</p>
-            <p class="dz-note">
+        <div id="dz-wrapper"> 
+            <p id="dz-message">
+                drag one or more files into this <b><i>drop zone</i></b>.
+            </p>
+            <p id="dz-note">
                 [the drop zone is exclusive to 
                 <a target="_blank" rel="noopener noreferrer" href="https://www.sqlite.org/index.html">
                     <i><u>sqlite files</u></i></a>]

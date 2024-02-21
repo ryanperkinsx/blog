@@ -7,9 +7,9 @@ class FileMenu extends HTMLElement {
     connectedCallback() {
         const {shadowRoot} = this;
         shadowRoot.innerHTML = `<style>
-            .fm-wrapper { }
+            #fm-wrapper { }
         </style>
-        <div id="fm-wrapper" class="fm-wrapper">
+        <div id="fm-wrapper">
         </div>`;
         console.log(`${this.id}: added to the DOM.`)
 

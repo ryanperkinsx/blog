@@ -7,9 +7,9 @@ class RaceMenu extends HTMLElement {
     connectedCallback() {
         const {shadowRoot} = this;
         shadowRoot.innerHTML = `<style>
-            .rm-wrapper { }
+            #rm-wrapper { }
         </style>
-        <div class="rm-wrapper">
+        <div id="rm-wrapper">
         </div>`;
         console.log(`${this.id}: added to the DOM.`)
 

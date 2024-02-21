@@ -15,6 +15,7 @@
 - [***database.js***](https://sql.js.org/documentation/) is a wonderful Javascript version of SQLite + [***the repo***](https://github.com/sql-js/sql.js) 
 - export icon CSS by [***gaetanoM***](https://stackoverflow.com/questions/34623447/how-to-create-arrow-down-up-in-css)
 - dialog + overlay CSS adapted from [***James Douglas***](https://stackoverflow.com/questions/45607982/how-to-disable-background-when-modal-window-pops-up)
+- [***tables***](https://html.spec.whatwg.org/multipage/tables.html)
 
 ## run locally with Node.js
 
