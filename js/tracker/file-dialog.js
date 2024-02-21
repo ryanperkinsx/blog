@@ -1,5 +1,5 @@
 import { databases } from "../database.js";
-import { clearElement } from "../util.js";
+import Util from "../util.js";
 
 class FileDialog extends HTMLElement {
     static observedAttributes = ["style"];
@@ -9,10 +9,6 @@ class FileDialog extends HTMLElement {
         this.attachShadow({mode: 'open'});
     }
 
-    firstStep(fileName) {
-
-    }
-
     attributeChangedCallback(name, oldValue, newValue) {
         const { id } = this;
         if (name === "style" && newValue === "display: block;") {
@@ -20,9 +16,11 @@ class FileDialog extends HTMLElement {
             if (this.getAttribute("filename") !== null) {
                 const fileName = this.getAttribute("filename");
 
-                // load the training blocks into fd-select
+                // begin query: getTrainingBlockIdAndNames()
                 databases[fileName].getTrainingBlockIdAndNames().then((data) => {
+                    // begin loop
                     [...data].forEach((page) => {
+                        // begin pagination loop
                         [...page.values].forEach((trainingBlock) => {
                             const trainingBlockId = trainingBlock[0];
                             const trainingBlockName = trainingBlock[1];
@@ -31,11 +29,11 @@ class FileDialog extends HTMLElement {
                             option.textContent = trainingBlockName;
                             this.shadowRoot.getElementById("fd-select").appendChild(option);
                             console.log(`fd-select: "${trainingBlockName}" added as an option.`);
-                        })
-                    });
+                        })  // end pagination loop
+                    });  // end loop
                 }).catch((res) => {
                     console.log(res);
-                });
+                });  // end query: getTrainingBlockIdAndNames()
             } else {
                 console.log(`${id}: filename attribute is required to open!`)
             }
@@ -172,19 +170,18 @@ class FileDialog extends HTMLElement {
     }  // placeholder
 
     handleCloseClick(event) {
-        const fileDialog = document.getElementById(`file-dialog`);
-        fileDialog.removeAttribute("filename");
-        fileDialog.style.display = "none";
-        clearElement(fileDialog.shadowRoot, "fd-select", "option", "fd-select-default");  // clean up fd-select
-        clearElement(fileDialog.shadowRoot, "fd-table-body", "tr");  // clean up fd-table-body
-        // fileDialog.shadowRoot.getElementById("fd-select").value = "";
         // TODO: ask to save
+        const fileDialog = document.getElementById(`file-dialog`);
+        fileDialog.style.display = "none";
+        fileDialog.removeAttribute("filename");
+        Util.clearElement(fileDialog.shadowRoot, "fd-select", "option", "fd-select-default");  // clean up fd-select
+        Util.clearElement(fileDialog.shadowRoot, "fd-table-body", "tr");  // clean up fd-table-body
     }
 
     handleSelectChange(event) {
         // TODO: display all the needful for training blocks...
         const fileDialog = document.getElementById("file-dialog");
-        clearElement(fileDialog.shadowRoot, "fd-table-body", "tr");  // clean up fd-table-body
+        Util.clearElement(fileDialog.shadowRoot, "fd-table-body", "tr");  // clean up fd-table-body
         const fileName = fileDialog.getAttribute("filename");
 
         // begin query: getWeeksByTrainingBlockId()
