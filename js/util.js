@@ -7,4 +7,20 @@ export default class Util {
             }
         });
     }
+
+    static disableFormElements(root, elementIds) {
+        let element;
+        [...elementIds].forEach((id) => {
+            element = root.getElementById(id);
+            element.disabled = true;
+        });
+    }
+
+    static enableFormElements(root, elementIds) {
+        let element;
+        [...elementIds].forEach((id) => {
+            element = root.getElementById(id);
+            element.disabled = false;
+        });
+    }
 }
