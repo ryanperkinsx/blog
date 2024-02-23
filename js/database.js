@@ -61,6 +61,10 @@ export class Database {
     async getDaysByWeekId(id) {
         return await this._db.exec("SELECT * FROM day WHERE week_id=$id", {"$id": id});
     }
+
+    async updateMilesByDayId(id) {
+        return await this._db.exec("UPDATE day SET miles = ? WHERE week_id = ? AND day_number = ?", {"$id": id});
+    }
 }
 
 export const databases = {};  // to hold the database objects

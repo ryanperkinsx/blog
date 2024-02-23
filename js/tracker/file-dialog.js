@@ -7,17 +7,34 @@ class FileDialog extends HTMLElement {
     constructor() {
         super();  // always call super-duper
         this.attachShadow({mode: 'open'});
+        this._fileName = "";
+        this._trainingBlockId = "";
+    }
+
+    get fileName() {
+        return this._fileName;
+    }
+
+    set fileName(newValue) {
+        this._fileName = newValue;
+    }
+
+    get trainingBlockId() {
+        return this._trainingBlockId;
+    }
+
+    set trainingBlockId(newValue) {
+        this._trainingBlockId = newValue;
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
         const { id } = this;
         if (name === "style" && newValue === "display: block;") {
             console.log(`${id}: displaying dialog...`);
-            if (this.getAttribute("filename") !== null) {
-                const fileName = this.getAttribute("filename");
-
+            this.fileName = this.getAttribute("filename");
+            if (this.fileName) {
                 // begin query: getTrainingBlockIdAndNames()
-                databases[fileName].getTrainingBlockIdAndNames().then((data) => {
+                databases[this.fileName].getTrainingBlockIdAndNames().then((data) => {
                     // begin loop
                     [...data].forEach((page) => {
                         // begin pagination loop
@@ -277,12 +294,15 @@ class FileDialog extends HTMLElement {
     }
 
     handleSelectChange(event) {
+        this.trainingBlockId = this.value;
         const fileDialog = document.getElementById("file-dialog");
         Util.clearElement(fileDialog.shadowRoot, "fd-table-body", "tr");  // clean up fd-table-body
-        const fileName = fileDialog.getAttribute("filename");
+
+        console.log(this.fileName)  // TODO: these aren't setting...
+        console.log(this.trainingBlockId)
 
         // begin query: getWeeksByTrainingBlockId()
-        databases[fileName].getWeeksByTrainingBlockId(this.value).then((trainingBlockData) => {
+        databases[this.fileName].getWeeksByTrainingBlockId(this.trainingBlockId).then((trainingBlockData) => {
             let row, cell;  // re-usable loop variables
             const tableBody = fileDialog.shadowRoot.getElementById("fd-table-body");
 
@@ -291,7 +311,7 @@ class FileDialog extends HTMLElement {
                 // begin outer pagination loop
                 [...trainingBlockPage.values].forEach((week) => {
                     // begin query: getDaysByWeekId()
-                    databases[fileName].getDaysByWeekId(week[0]).then((weekData) => {  // week[0] = week_id
+                    databases[this.fileName].getDaysByWeekId(week[0]).then((weekData) => {  // week[0] = week_id
                         // begin inner loop
                         [...weekData].forEach((weekPage) => {
                             row = document.createElement("tr");
@@ -333,9 +353,43 @@ class FileDialog extends HTMLElement {
     handleUpdateFormSubmit(event) {
         event.preventDefault();
         const data = new FormData(this);
-        for (const [name,value] of data) {
-            console.log(`${name}: ${value}`)
-        }
+        const weekNumber = data.week;
+        const dayNumber = data.day;
+        const miles = data.mile;
+        console.log(weekNumber);
+        console.log(dayNumber);
+        console.log(miles);
+
+        [...data].forEach((name, value) => {
+            databases[this.fileName].getWeeksByTrainingBlockId(this.trainingBlockId).then((weekData) => {
+
+                // begin outer loop
+                [...weekData].forEach((weekPage) => {
+                    // begin outer pagination loop
+                    [...weekPage.values].forEach((week) => {
+                        // begin query: getDaysByWeekId()
+
+                        this._database.getDaysByWeekId(week[0]).then((weekData) => {  // week[0] = week_id
+
+                            // begin inner loop
+                            [...weekData].forEach((weekPage) => {
+
+                                // begin inner pagination loop
+                                [...weekPage.values].forEach((day) => {
+
+                                });  // end inner pagination loop
+
+                            });  // end inner loop
+                        });  // end query: getDaysByWeekId()
+                    });  // end outer pagination loop
+                });  // end outer loop
+
+            });
+
+            this._database.getWeekByTrainingBlockIdAndWeekNumber().then(() => {
+
+            });
+        });
     }
 }
 
