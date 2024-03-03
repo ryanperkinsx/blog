@@ -1,4 +1,4 @@
-import { databases } from "../database.js";
+import { databases } from "./database.js";
 
 class FileMenuItem extends HTMLElement {
     constructor() {
@@ -98,10 +98,11 @@ class FileMenuItem extends HTMLElement {
         fileDialog.style.display = "block";
     }
 
-    handleExportClick(event) {
+    async handleExportClick(event) {
         event.preventDefault();
-        console.log(`${this.id}: ya clicked me, boy!`);
-    }  // TODO: export
+        const fileName = this.getAttribute("id").replace("fmi-", "").replace("-export", "");
+        await databases[fileName].exportDb();
+    }
 
     handleRemoveClick(event) {
         event.preventDefault();

@@ -1,5 +1,5 @@
-import { databases } from "../database.js";
-import Util from "../util.js";
+import { databases } from "./database.js";
+import Util from "./util.js";
 
 class FileDialog extends HTMLElement {
     static observedAttributes = ["style"];
@@ -7,24 +7,6 @@ class FileDialog extends HTMLElement {
     constructor() {
         super();  // always call super-duper
         this.attachShadow({mode: 'open'});
-        this._fileName = "";
-        this._trainingBlockId = "";
-    }
-
-    get fileName() {
-        return this._fileName;
-    }
-
-    set fileName(newValue) {
-        this._fileName = newValue;
-    }
-
-    get trainingBlockId() {
-        return this._trainingBlockId;
-    }
-
-    set trainingBlockId(newValue) {
-        this._trainingBlockId = newValue;
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -123,11 +105,12 @@ class FileDialog extends HTMLElement {
                 border-left: 3px solid rgba(255, 255, 255, 1);
                 display: grid;
                 grid-template-columns: 1fr;
-                grid-template-rows: 1fr 4fr;
+                grid-template-rows: 1fr 4fr 1fr;
                 gap: 0 0;
                 grid-template-areas:
                 "sm"
-                "uf";
+                "uf"
+                "eb";
             }
             #fd-tb-select {
                 grid-area: sm;
@@ -193,7 +176,7 @@ class FileDialog extends HTMLElement {
             .uf-input.mile {
                 grid-area: mi;
             }
-            #uf-submit {
+            button {
                 grid-area: sb;
                 width: 40%;
                 height: 25px;
@@ -203,13 +186,19 @@ class FileDialog extends HTMLElement {
                 font-family: inherit;
                 border: 2px solid #ffffff;
             }
-            #uf-submit:disabled {
+            button:disabled {
                 opacity: 25%;
             }
-            #uf-submit:enabled:hover {
+            button:enabled:hover {
                 background: #ffffff;
                 color: #000000;
                 border: 2px solid #000000;
+            }
+            #uf-submit {
+                grid-area: sb;
+            }
+            #fd-export {
+                grid-area: eb;
             }
         </style>
         <div id="fd-wrapper">
@@ -240,31 +229,30 @@ class FileDialog extends HTMLElement {
                 <form id="update-form">
                     <label class="uf-label week" for="week">Week</label>
                     <p class="uf-colon week">:</p>
-                    <input id="uf-input-week" class="uf-input week" type="text" name="week" required disabled>
+                    <input id="uf-input-week" class="uf-input week" type="number" name="week" required disabled>
                     <select id="uf-dg-select" required disabled>
                         <option value="day" selected> Day </option>
                         <option value="goal"> Goal </option>
                     </select>
                     <p id="uf-dg-colon">:</p>
-                    <input id="uf-input-dg" type="text" name="day" required disabled>
+                    <input id="uf-input-dg" type="number" name="day" required disabled>
                     <label id="uf-mile-label" for="miles">Miles</label>
                     <p id="uf-mile-colon">:</p>
-                    <input id="uf-input-mile" type="text" name="miles" required disabled>
+                    <input id="uf-input-mile" type="number" name="miles" required disabled>
                     <button id="uf-submit" type="submit" disabled>Update</button>
                 </form>
+                <button id="fd-export">Export</button>
             </div>
         </div>`;
 
         shadowRoot.getElementById("fd-close").addEventListener("click", this.handleCloseClick);
         shadowRoot.getElementById("fd-tb-select").addEventListener("change", this.handleSelectChange);
         shadowRoot.getElementById("update-form").addEventListener("submit", this.handleUpdateFormSubmit);
+        shadowRoot.getElementById("fd-export").addEventListener("click", this.handleExportClick);
         console.log(`${this.id}: added to the DOM.`)
 
-        // TODO: save button
         // TODO: export button
-        // TODO: update form
         // TODO: add + remove week buttons
-        // TODO: make the header columns larger
         // TODO: make prettier
     }
 
@@ -273,68 +261,86 @@ class FileDialog extends HTMLElement {
         shadowRoot.getElementById("fd-close").removeEventListener("click", this.handleCloseClick);
         shadowRoot.getElementById("fd-tb-select").removeEventListener("change", this.handleSelectChange);
         shadowRoot.getElementById("update-form").removeEventListener("submit", this.handleUpdateFormSubmit);
+        shadowRoot.getElementById("fd-export").removeEventListener("click", this.handleExportClick);
         console.log(`${this.id}: removed from the the DOM.`)
-    }  // placeholder
+    }
 
     handleCloseClick(event) {
-        // update file-dialog
         const fileDialog = document.getElementById(`file-dialog`);
-        fileDialog.style.display = "none";
-        fileDialog.removeAttribute("filename");
 
-        // reset fd-tb-select
+        // reset training block select
         fileDialog.shadowRoot.getElementById("fd-tb-select").value = "";
-        Util.clearElement(fileDialog.shadowRoot, "fd-tb-select", "option", "fd-tb-select-default");
-
-        const formElements = ["uf-input-week", "uf-dg-select", "uf-input-dg", "uf-input-mile", "uf-submit"];
-        Util.disableFormElements(fileDialog.shadowRoot, formElements)
+        Util.clearElements(fileDialog.shadowRoot, "fd-tb-select", "option", "fd-tb-select-default");
 
         // clear the table
-        Util.clearElement(fileDialog.shadowRoot, "fd-table-body", "tr");
+        Util.clearElements(fileDialog.shadowRoot, "fd-table-body", "tr");
+
+        // disable the form
+        Util.disableFormElements(fileDialog.shadowRoot,
+            ["uf-input-week", "uf-dg-select", "uf-input-dg", "uf-input-mile", "uf-submit"]
+        );
+
+        // hide the dialog
+        fileDialog.style.display = "none";
+        fileDialog.removeAttribute("filename");
+    }
+
+    async handleExportClick(event) {
+        const fileDialog = document.getElementById("file-dialog");
+        const fileName = fileDialog.getAttribute("filename");
+        await databases[fileName].exportDb();
     }
 
     handleSelectChange(event) {
-        this.trainingBlockId = this.value;
+        // variables
         const fileDialog = document.getElementById("file-dialog");
-        Util.clearElement(fileDialog.shadowRoot, "fd-table-body", "tr");  // clean up fd-table-body
+        const fileName = fileDialog.getAttribute("filename");
+        const db = databases[fileName];
+        const tableBody = fileDialog.shadowRoot.getElementById("fd-table-body");
+        const trainingBlockId = this.value;
+        let row, cell, miles, totalMiles;  // reusable loop variables
 
-        console.log(this.fileName)  // TODO: these aren't setting...
-        console.log(this.trainingBlockId)
+        // clean up fd-table-body
+        Util.clearElements(fileDialog.shadowRoot, "fd-table-body", "tr");
 
-        // begin query: getWeeksByTrainingBlockId()
-        databases[this.fileName].getWeeksByTrainingBlockId(this.trainingBlockId).then((trainingBlockData) => {
-            let row, cell;  // re-usable loop variables
-            const tableBody = fileDialog.shadowRoot.getElementById("fd-table-body");
+        // update the active training block ID
+        db._activeTrainingBlockId = trainingBlockId;
 
+        // begin query getWeeksByTrainingBlockId()
+        db.getWeeksByTrainingBlockId(trainingBlockId).then((trainingBlockData) => {
             // begin outer loop
             [...trainingBlockData].forEach((trainingBlockPage) => {
                 // begin outer pagination loop
                 [...trainingBlockPage.values].forEach((week) => {
-                    // begin query: getDaysByWeekId()
-                    databases[this.fileName].getDaysByWeekId(week[0]).then((weekData) => {  // week[0] = week_id
+                    // begin query getDaysByWeekId()
+                    db.getDaysByWeekId(week[0]).then((weekData) => {  // week[0] = week.week_id
                         // begin inner loop
                         [...weekData].forEach((weekPage) => {
+
                             row = document.createElement("tr");
                             cell = document.createElement("td");  // week.week_number cell
+                            cell.id = week[0];  // week[0] = week.week_id
                             cell.textContent = week[3];
                             row.appendChild(cell);
-                            let totalMiles = 0;
-
-                            // TODO: highlight today's day
+                            totalMiles = 0; // reset
 
                             // begin inner pagination loop
                             [...weekPage.values].forEach((day) => {
-                                const miles = day[3];
+                                // TODO: highlight today's day
+                                miles = day[3];
                                 totalMiles += miles;
                                 cell = document.createElement("td");  // day.miles cell
+                                cell.id = day[0];  // day[0] = day.day_id
                                 cell.textContent = miles;
                                 row.appendChild(cell);
                             });  // end inner pagination loop
 
                             cell = document.createElement("td");  // total day.miles cell
+                            cell.id = `${week[0]}-miles`;  // week[0] = week.week_id
                             cell.textContent = totalMiles;
                             row.appendChild(cell);
                             cell = document.createElement("td");  // week.goal cell
+                            cell.id = `${week[0]}-goal`;  // week[0] = week.week_id
                             cell.textContent = week[1];
                             row.appendChild(cell);
                             tableBody.appendChild(row);
@@ -343,53 +349,88 @@ class FileDialog extends HTMLElement {
                 });  // end outer pagination loop
             });  // end outer loop
 
-            const formElements = ["uf-input-week", "uf-dg-select", "uf-input-dg", "uf-input-mile", "uf-submit"];
-            Util.enableFormElements(fileDialog.shadowRoot, formElements)
+            // enable the form
+            Util.enableFormElements(fileDialog.shadowRoot,
+                ["uf-input-week", "uf-dg-select", "uf-input-dg", "uf-input-mile", "uf-submit"]
+            );
         }).catch((res) => {
             console.log(res);
         });  // end query: getWeeksByTrainingBlockId()
     }
 
-    handleUpdateFormSubmit(event) {
+    async handleUpdateFormSubmit(event) {
         event.preventDefault();
+        const fileName = document.getElementById("file-dialog").getAttribute("filename");
+        const db = databases[fileName];
         const data = new FormData(this);
-        const weekNumber = data.week;
-        const dayNumber = data.day;
-        const miles = data.mile;
-        console.log(weekNumber);
-        console.log(dayNumber);
-        console.log(miles);
+        const weekNumber = Number(data.get("week"));
+        const dayNumber = Number(data.get("day"));
+        const miles = Number(data.get("miles"));
+        let weekId, dayId;  // reusable loop variables
 
-        [...data].forEach((name, value) => {
-            databases[this.fileName].getWeeksByTrainingBlockId(this.trainingBlockId).then((weekData) => {
+        // begin query getWeeksByTrainingBlockId()
+        await db.getWeeksByTrainingBlockId(db._activeTrainingBlockId).then((data) => {
+            // begin data loop
+            [...data].forEach((pages) => {
+                // begin pagination loop
+                [...pages.values].forEach((week) => {
+                    if (week[3] === weekNumber) {  // week[3] = week.week_number
+                        weekId = week[0];  // week[0] = week.week_id
+                        console.log(weekId);
+                        throw "week ID found.";
+                    }
+                });  // end pagination loop
+            });  // end loop
+            console.log("week ID not found.")
+        }).catch((res) => {
+            console.log(res);
+        });  // end query getWeeksByTrainingBlockId()
 
-                // begin outer loop
-                [...weekData].forEach((weekPage) => {
-                    // begin outer pagination loop
-                    [...weekPage.values].forEach((week) => {
-                        // begin query: getDaysByWeekId()
+        if (weekId) {
+            // begin query getDaysByWeekId()
+            await db.getDaysByWeekId(weekId).then((data) => {
+                // begin data loop
+                [...data].forEach((pages) => {
+                    // begin pagination loop
+                    [...pages.values].forEach((day) => {
+                        if (day[2] === dayNumber) {  // day[2] = day.day_number
+                            dayId = day[0];  // day[0] = day.day_id
+                            throw "day ID found.";
+                        }
+                    });  // end pagination loop
+                });  // end data loop
+                console.log("day ID not found.")
+            }).catch((res) => {
+                console.log(res);
+            }); // end query getDaysByWeekId()
+        }
 
-                        this._database.getDaysByWeekId(week[0]).then((weekData) => {  // week[0] = week_id
+        if (dayId) {
+            // begin query updateMilesByDayId()
+            await db.updateMilesByDayId(miles, dayId).then(() => {
+                [...this.getElementsByTagName("input")].forEach((item) => {
+                    item.value = "";
+                });
 
-                            // begin inner loop
-                            [...weekData].forEach((weekPage) => {
+                // elements to update
+                const fileDialog = document.getElementById("file-dialog").shadowRoot;
+                const dayCell = fileDialog.getElementById(dayId);
+                const totalMilesCell = fileDialog.getElementById(`${weekId}-miles`);
 
-                                // begin inner pagination loop
-                                [...weekPage.values].forEach((day) => {
+                // some math
+                const prevMiles = Number(dayCell.textContent);
+                const prevTotal = Number(totalMilesCell.textContent);
+                const newTotal = String(prevTotal - prevMiles + miles);
 
-                                });  // end inner pagination loop
-
-                            });  // end inner loop
-                        });  // end query: getDaysByWeekId()
-                    });  // end outer pagination loop
-                });  // end outer loop
-
+                // update
+                dayCell.textContent = String(miles);
+                totalMilesCell.textContent = String(newTotal);
+                console.log(`week: ${weekNumber}, day: ${dayNumber} updated to ${miles} miles.`);
+            }).catch((res) => {
+                console.log(res);
             });
-
-            this._database.getWeekByTrainingBlockIdAndWeekNumber().then(() => {
-
-            });
-        });
+            // end query updateMilesByDayId()
+        }
     }
 }
 

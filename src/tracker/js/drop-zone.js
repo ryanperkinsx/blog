@@ -1,4 +1,4 @@
-import {Database, databases} from "../database.js";
+import {Database, databases} from "./database.js";
 
 class DropZone extends HTMLElement {
     constructor() {

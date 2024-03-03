@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head id="head">
+    <meta charset="UTF-8">
+    <title>tracker.</title>
+
+    <!--  shortcut icon imports  -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
+    <!--  cross-origin for CORS   -->
+    <link rel="manifest" href="../assets/favicon/site.webmanifest" crossorigin="use-credentials">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <!--  css  -->
+    <link rel="stylesheet" href="tracker.css">
+
+    <!--  js  -->
+    <script type="module" src="js/database.js"></script>
+    <script type="module" src="js/util.js"></script>
+    <script type="module" src="js/drop-zone.js"></script>
+    <script type="module" src="js/file-dialog.js"></script>
+    <script type="module" src="js/file-menu.js"></script>
+    <script type="module" src="js/file-menu-item.js"></script>
+</head>
+<body>
+<div id="tracker-wrapper" class="tracker-wrapper">
+    <drop-zone id="drop-zone" class="drop-zone"></drop-zone>
+    <file-menu id="file-menu" class="file-menu"></file-menu>
+    <race-menu id="race-menu" class="race-menu"></race-menu>
+    <file-dialog id="file-dialog" class="file-dialog"></file-dialog>
+</div>
+</body>
