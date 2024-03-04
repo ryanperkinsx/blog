@@ -5,8 +5,8 @@
     <title>tracker.</title>
 
     <!--  shortcut icon imports  -->
-    <link rel="icon" type="image/png" href="../assets/favicon.ico">
-    <link rel="manifest" href="../assets/site.webmanifest" crossorigin="use-credentials">
+    <link rel="icon" type="image/png" href="../media/favicon.ico">
+    <link rel="manifest" href="../media/site.webmanifest" crossorigin="use-credentials">
     <!--  cross-origin for CORS   -->
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
@@ -15,6 +15,18 @@
     <link rel="stylesheet" href="./tracker.css">
 
     <!--  js  -->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.js"-->
+<!--            integrity="sha512-B+gr+zLWg81qxVwvtYwKrmjvQtZKD/GGFF7jD80OfzbqFw+NsbS5faEqpCO7Q7oRw1bYi0+WLJf54j8Vm7NADw=="-->
+<!--            crossorigin="anonymous"-->
+<!--            referrerpolicy="no-referrer">-->
+<!--    </script>-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.2/sql-wasm.js" -->
+<!--            integrity="sha512-Rw3r47C4BVCj/4dy0MiF30B9c7+dLNeJdgPkyw8KiiYqUzAP3XFFw90EjO7mHLkJBl7JCm+/iTuL9dGh47lbMw==" -->
+<!--            crossorigin="anonymous" -->
+<!--            referrerpolicy="no-referrer"-->
+<!--    </script>-->
+    <script src="../node_modules/sql.js/dist/sql-wasm.js"></script>
+    <script src="../node_modules/file-saver/src/FileSaver.js"></script>
     <script type="module" src="./database.js"></script>
     <script type="module" src="./util.js"></script>
     <script type="module" src="./drop-zone.js"></script>

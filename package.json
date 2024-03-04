@@ -2,7 +2,7 @@
   "name": "ryanperkinsx.github.io",
   "version": "1.0.0",
   "description": "my portfolio.",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --config webpack-config.dev.js --open",
     "build": "webpack --config webpack-config.prod.js",
@@ -20,7 +20,7 @@
   "homepage": "https://github.com/ryanperkinsx/ryanperkinsx.github.io",
   "dependencies": {
     "file-saver": "^2.0.5",
-    "sqlite3": "^5.1.7"
+    "sql.js": "^1.10.2"
   },
   "devDependencies": {
     "css-loader": "^6.10.0",
