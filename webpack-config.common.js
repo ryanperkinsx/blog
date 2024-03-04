@@ -1,17 +1,41 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const path = require("path");
+const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
 
-    entry: "./src/index.js",
+    entry: {
+        main: "./src/index.js",
+        tracker: "./src/tracker/tracker.js"
+    },
 
     output: {
-        assetModuleFilename: "images/[name]-[hash][ext]"
+        assetModuleFilename: "images/[name]-[hash][ext]",
+        clean: true
+    },
+
+    externals: {
+        sqlite3: "commonjs sqlite3",
+    },
+
+    resolve: {
+        fallback: {
+            "fs": false,
+            "path": false,
+            "crypto": false,
+            "util": false
+        }
     },
 
     plugins: [
         new HtmlWebpackPlugin({
-            template: "./src/template.html"
+            filename: "index.html",
+            template: "./src/index-template.html",
+            chunks: ["main"]
+        }),
+        new HtmlWebpackPlugin({
+            filename: "tracker.html",
+            template: "./src/tracker-template.html",
+            chunks: ["tracker"]
         })
     ],
 

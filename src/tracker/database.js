@@ -1,17 +1,5 @@
+import sqlite3 from "sqlite3";
 import { saveAs } from "file-saver";
-
-console.log("loading sql-wasm...");
-let SQL;
-const config = {
-    locateFile: filename => `./node_modules/sql.js/dist/${filename}`
-};
-await initSqlJs(config).then((value) => {
-    SQL = value;
-}).catch((res) => {
-    console.log(res);
-    throw new Error("unable to load sql-wasm! exiting.")
-});
-console.log("sql-wasm loaded.");
 
 export class Database {
     constructor(fileName, fileArray) {
@@ -21,7 +9,7 @@ export class Database {
 
         // try to initialize the DB
         try {
-            this._db = new SQL.Database(fileArray);
+            this._db = new sqlite3.Database(fileArray);
             console.log(`${fileName}: file loaded.`);
         } catch (e) {
             console.log(e);
