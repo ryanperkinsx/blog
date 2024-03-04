@@ -4,8 +4,6 @@
   "description": "my portfolio.",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --config webpack-config.dev.js --open",
-    "build": "webpack --config webpack-config.prod.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,20 +16,9 @@
     "url": "https://github.com/ryanperkinsx/ryanperkinsx.github.io/issues"
   },
   "homepage": "https://github.com/ryanperkinsx/ryanperkinsx.github.io",
-  "dependencies": {
+  "dependencies": { },
+  "devDependencies": {
     "file-saver": "^2.0.5",
     "sql.js": "^1.10.2"
-  },
-  "devDependencies": {
-    "css-loader": "^6.10.0",
-    "file-loader": "^6.2.0",
-    "html-loader": "^5.0.0",
-    "html-webpack-plugin": "^5.6.0",
-    "style-loader": "^3.3.4",
-    "webpack": "^5.90.3",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.0.2",
-    "webpack-merge": "^5.10.0",
-    "webpack-node-externals": "^3.0.0"
   }
 }

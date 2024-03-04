@@ -251,7 +251,6 @@ class FileDialog extends HTMLElement {
         shadowRoot.getElementById("fd-export").addEventListener("click", this.handleExportClick);
         console.log(`${this.id}: added to the DOM.`)
 
-        // TODO: export button
         // TODO: add + remove week buttons
         // TODO: make prettier
     }

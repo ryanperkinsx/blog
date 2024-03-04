@@ -104,7 +104,7 @@ class DropZone extends HTMLElement {
                     const file = item.getAsFile();
                     const fileName = file.name;
                     const fileMenu = document.getElementById("file-menu");
-                    const isDuplicateFile = fileMenu.shadowRoot.getElementById(`${fileName}`) === null;
+                    const isDuplicateFile = fileMenu.shadowRoot.getElementById(`fmi-${fileName}`) === null;
 
                     // skip duplicate
                     if (!isDuplicateFile) {
