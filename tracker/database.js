@@ -1,3 +1,5 @@
+import Util from "./util.js";
+
 console.log("loading sql-wasm...");
 let SQL;
 const config = {
@@ -62,6 +64,49 @@ export class Database {
         const data = await this._db.export();
         const file = new Blob([data], {type: "text/text;charset=utf-8"});
         saveAs(file, this._fileName);
+    }
+
+    async addDay(trainingBlockId, weekId, __date, dayNumber) {
+        const dayId = Util.uuidv4()
+        return await this._db.exec(`
+            INSERT INTO day (day_id, date, day_number, miles, training_block_id, week_id) 
+            VALUES($dayId, $__date, $dayNumber, 0, $trainingBlockId, $weekId)
+            `,
+            {
+                "$dayId": dayId,
+                "$__date": __date,
+                "$dayNumber": dayNumber,
+                "$trainingBlockId": trainingBlockId,
+                "$weekId": weekId,
+            }
+        );
+    }
+
+    async addWeek(trainingBlockId, weekNumber) {
+        const weekId = Util.uuidv4()
+        await this._db.exec(`
+            INSERT INTO week (week_id, training_block_id, week_number, goal) 
+            VALUES($weekId, $trainingBlockId, $weekNumber, 0)
+            `,
+            {
+                "$weekId": weekId,
+                "$trainingBlockId": trainingBlockId,
+                "$weekNumber": weekNumber
+            }
+        );
+        return weekId;
+    }
+
+    async getLastWeekByTrainingBlockId(trainingBlockId) {
+        return await this._db.exec("SELECT week_id, MAX(week_number) FROM week WHERE training_block_id=$trainingBlockId",
+            {"$trainingBlockId": trainingBlockId}
+        );
+    }
+
+    async getDayByWeekIdAndDayNumber(weekId, dayNumber) {
+        return await this._db.exec("SELECT * FROM day WHERE week_id=$weekId AND day_number=$dayNumber",
+            {"$weekId": weekId, "$dayNumber": dayNumber}
+        );
     }
 
     async getTrainingBlockIdAndNames() {

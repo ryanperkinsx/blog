@@ -105,11 +105,12 @@ class FileDialog extends HTMLElement {
                 border-left: 3px solid rgba(255, 255, 255, 1);
                 display: grid;
                 grid-template-columns: 1fr;
-                grid-template-rows: 1fr 4fr 1fr;
+                grid-template-rows: 1fr 6fr 1fr 1fr;
                 gap: 0 0;
                 grid-template-areas:
                 "sm"
                 "uf"
+                "aw"
                 "eb";
             }
             #fd-tb-select {
@@ -125,6 +126,9 @@ class FileDialog extends HTMLElement {
             #update-form {
                 grid-area: uf;
                 height: 30%;
+                border: 3px solid #ffffff;
+                margin: 10px 20px 0 20px;
+                padding: 30px 0 0 0;
                 display: grid;
                 grid-template-columns: 1fr .2fr 2fr;
                 grid-template-rows: 30px 30px 30px 30px;
@@ -143,14 +147,16 @@ class FileDialog extends HTMLElement {
             .uf-label.mile {
                 grid-area: ml;
             }
-            #uf-dg-select {
-                grid-area: dgs;
+            select {
                 font-family: inherit;
                 background: inherit;
                 color: inherit;
                 height: 25px;
                 width: 65px;
                 font-size: medium;
+            }
+            #uf-dg-select {
+                grid-area: dgs;
             }
             .uf-colon { }
             .uf-colon.week {
@@ -197,6 +203,9 @@ class FileDialog extends HTMLElement {
             #uf-submit {
                 grid-area: sb;
             }
+            #fd-add-week {
+                grid-area: aw;
+            }
             #fd-export {
                 grid-area: eb;
             }
@@ -241,6 +250,7 @@ class FileDialog extends HTMLElement {
                     <input id="uf-input-mile" type="number" name="miles" required disabled>
                     <button id="uf-submit" type="submit" disabled>Update</button>
                 </form>
+                <button id="fd-add-week">+ Add Week</button>
                 <button id="fd-export">Export</button>
             </div>
         </div>`;
@@ -248,6 +258,7 @@ class FileDialog extends HTMLElement {
         shadowRoot.getElementById("fd-close").addEventListener("click", this.handleCloseClick);
         shadowRoot.getElementById("fd-tb-select").addEventListener("change", this.handleSelectChange);
         shadowRoot.getElementById("update-form").addEventListener("submit", this.handleUpdateFormSubmit);
+        shadowRoot.getElementById("fd-add-week").addEventListener("click", this.handleAddWeekClick);
         shadowRoot.getElementById("fd-export").addEventListener("click", this.handleExportClick);
         console.log(`${this.id}: added to the DOM.`)
 
@@ -261,7 +272,53 @@ class FileDialog extends HTMLElement {
         shadowRoot.getElementById("fd-tb-select").removeEventListener("change", this.handleSelectChange);
         shadowRoot.getElementById("update-form").removeEventListener("submit", this.handleUpdateFormSubmit);
         shadowRoot.getElementById("fd-export").removeEventListener("click", this.handleExportClick);
+        shadowRoot.getElementById("fd-add-week").removeEventListener("click", this.handleAddWeekClick);
+
         console.log(`${this.id}: removed from the the DOM.`)
+    }
+
+    async handleAddWeekClick(event) {
+        const fileDialog = document.getElementById("file-dialog");
+        const fileName = fileDialog.getAttribute("filename");
+        const db = databases[fileName];
+        let __date, lastWeekId, newWeekId, newWeekNumber;
+
+        // begin query getLastWeekByTrainingBlockId()
+        await db.getLastWeekByTrainingBlockId(db._activeTrainingBlockId).then((data) => {
+            lastWeekId = data[0]["values"][0][0];  // week.week_id
+            newWeekNumber = Number(data[0]["values"][0][1]) + 1;  // week.week_number
+        }).catch((res) => {
+            console.log(res);
+        });  // end query getLastWeekByTrainingBlockId()
+
+        if (lastWeekId && newWeekNumber) {
+
+            // begin query addWeek()
+            await db.addWeek(db._activeTrainingBlockId, lastWeekNumber + 1).then((data) => {
+                newWeekId = data;
+                console.log(`${fileName}: +1 week.`)
+            }).catch((res) => {
+                console.log(res);
+            });  // end query addWeek()
+
+            // begin query getDayByWeekIdAndDayNumber()
+            await db.getDayByWeekIdAndDayNumber(lastWeekId, 7).then((data) => {
+                __date = new Date(data[0]["values"][0][1]);
+            }).catch((res) => {
+                console.log(res);
+            });  // end query getDayByWeekIdAndDayNumber()
+
+            for (let i = 0; i < 7; i++) {
+                __date.setDate(__date.getDate() + 1);
+
+                // begin query addDay()
+                await db.addDay(db._activeTrainingBlockId, newWeekId, __date.toISOString().substring(0, 10), i + 1).then(() => {
+                    console.log(`${fileName}: +1 day.`)
+                }).catch((res) => {
+                    console.log(res);
+                });  // end query addDay()
+            }  // end for loop
+        }  // end if
     }
 
     handleCloseClick(event) {
@@ -284,14 +341,19 @@ class FileDialog extends HTMLElement {
         fileDialog.removeAttribute("filename");
     }
 
-    async handleExportClick(event) {
+    handleExportClick(event) {
         const fileDialog = document.getElementById("file-dialog");
         const fileName = fileDialog.getAttribute("filename");
-        await databases[fileName].exportDb();
+        const db = databases[fileName];
+        db.exportDb().then(() => {
+            console.log(`${fileName}: exported.`)
+        }).catch((res) => {
+            console.log(`${fileName}: error while exporting!`)
+            console.log(res)
+        });
     }
 
     handleSelectChange(event) {
-        // variables
         const fileDialog = document.getElementById("file-dialog");
         const fileName = fileDialog.getAttribute("filename");
         const db = databases[fileName];
